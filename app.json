@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "hymnhub",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -13,22 +13,29 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.hymnhub",
+      "buildNumber": "1.0.0",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app needs access to your location for better user experience."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.yourcompany.hymnhub",
+      "versionCode": 1,
+      "permissions": []
     },
     "web": {
-      "bundler": "metro",
+      "favicon": "./assets/images/favicon.png",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "bundler": "metro"
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
     }
