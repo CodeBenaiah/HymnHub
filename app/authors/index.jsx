@@ -1,5 +1,6 @@
 // app/authors/index.jsx
 import React from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, StyleSheet } from "react-native";
 
 const authors = [
