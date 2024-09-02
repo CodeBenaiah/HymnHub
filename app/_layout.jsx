@@ -1,10 +1,15 @@
-// app/_layout.jsx
 import React from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
-import { Slot } from "expo-router";
-import { FontAwesome } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { View, Image, TouchableOpacity, StyleSheet } from "react-native";
+import { Slot, Link } from "expo-router";
 import { useFonts } from "expo-font";
+import { ActivityIndicator } from "react-native";
+
+// Import your custom icons
+const booksIcon = require("../assets/images/books.png");
+const languageIcon = require("../assets/images/language.png");
+const searchIcon = require("../assets/images/search.png");
+const authorIcon = require("../assets/images/author.png");
+const bookmarkIcon = require("../assets/images/bookmark.png");
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -24,20 +29,30 @@ export default function Layout() {
     <View style={styles.container}>
       <Slot />
       <View style={styles.navigation}>
-        <Link href="/books" style={styles.icon}>
-          <FontAwesome name="book" size={24} color="#ffffff" />
+        <Link href="/books" asChild>
+          <TouchableOpacity style={styles.iconContainer}>
+            <Image source={booksIcon} style={styles.icon} />
+          </TouchableOpacity>
         </Link>
-        <Link href="/settings" style={styles.icon}>
-          <FontAwesome name="globe" size={24} color="#ffffff" />
+        <Link href="/settings" asChild>
+          <TouchableOpacity style={styles.iconContainer}>
+            <Image source={languageIcon} style={styles.icon} />
+          </TouchableOpacity>
         </Link>
-        <Link href="/search" style={styles.icon}>
-          <FontAwesome name="search" size={24} color="#ffffff" />
+        <Link href="/search" asChild>
+          <TouchableOpacity style={styles.iconContainer}>
+            <Image source={searchIcon} style={styles.icon} />
+          </TouchableOpacity>
         </Link>
-        <Link href="/authors" style={styles.icon}>
-          <FontAwesome name="user" size={24} color="#ffffff" />
+        <Link href="/authors" asChild>
+          <TouchableOpacity style={styles.iconContainer}>
+            <Image source={authorIcon} style={styles.icon} />
+          </TouchableOpacity>
         </Link>
-        <Link href="/favourites" style={styles.icon}>
-          <FontAwesome name="star" size={24} color="#ffffff" />
+        <Link href="/favourites" asChild>
+          <TouchableOpacity style={styles.iconContainer}>
+            <Image source={bookmarkIcon} style={styles.icon} />
+          </TouchableOpacity>
         </Link>
       </View>
     </View>
@@ -45,25 +60,30 @@ export default function Layout() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#182026", // Main background color
-  },
   loadingContainer: {
     flex: 1,
     backgroundColor: "#182026",
     justifyContent: "center",
     alignItems: "center",
   },
+  container: {
+    flex: 1,
+    backgroundColor: "#182026", // Main background color
+  },
   navigation: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingVertical: 10,
+    paddingVertical: 20,
+    backgroundColor: "#182026", // Navigation background color
     borderTopWidth: 1,
-    borderColor: "#ccc",
-    backgroundColor: "#182026", // Match main background color
+    borderColor: "#111", // Slightly lighter border for visibility
+  },
+  iconContainer: {
+    alignItems: "center",
   },
   icon: {
-    alignItems: "center",
+    width: 27,
+    height: 27,
+    tintColor: "#ffffff", // Tint the icons to white if needed
   },
 });
