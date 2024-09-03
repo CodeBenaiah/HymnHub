@@ -1,0 +1,224 @@
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  ActivityIndicator,
+  ScrollView,
+} from "react-native";
+import { useFonts } from "expo-font";
+
+// Import the JSON data
+const data = require("../../assets/data.json");
+
+export default function LanguageIndex() {
+  const [fontsLoaded] = useFonts({
+    Roboto: require("../../assets/fonts/Roboto-Regular.ttf"),
+    BebasNeue: require("../../assets/fonts/BebasNeue-Regular.ttf"),
+  });
+
+  const [view, setView] = useState("languages"); // 'languages' or 'songs'
+  const [selectedLanguage, setSelectedLanguage] = useState(null);
+  const [songsData, setSongsData] = useState([]);
+  const [allSongs, setAllSongs] = useState([]);
+  const [selectedSong, setSelectedSong] = useState(null);
+  const [songNumberKey, setSongNumberKey] = useState(null); // Key for song number
+  const [bookKey, setBookKey] = useState(null); // Key for song book
+
+  useEffect(() => {
+    // Extract all songs from the data
+    const songs = Object.values(data).flat();
+    setAllSongs(songs);
+
+    // Dynamically set the key for song number and book from the first entry
+    if (songs.length > 0) {
+      const firstEntry = songs[0];
+      const keys = Object.keys(firstEntry);
+      setSongNumberKey(
+        keys.find(
+          (key) =>
+            ![
+              "Title",
+              "Link / Audio",
+              "Lyrics",
+              "Language",
+              "Song Book",
+            ].includes(key)
+        )
+      );
+      setBookKey("Song Book"); // Assuming 'Book' is the key for song book
+    }
+  }, []);
+
+  useEffect(() => {
+    if (selectedLanguage) {
+      const filteredSongs = allSongs
+        .filter((song) => song.Language === selectedLanguage)
+        .sort((a, b) => a.Title.localeCompare(b.Title));
+      setSongsData(filteredSongs);
+      setView("songs"); // Automatically switch to 'songs' view when a language is selected
+    }
+  }, [selectedLanguage]);
+
+  const handleLanguageSelect = (language) => {
+    setSelectedLanguage(language);
+  };
+
+  const handleSongSelect = (song) => {
+    setSelectedSong(song);
+    setView("song");
+  };
+
+  const renderLanguages = () => {
+    // Extract unique languages from all songs
+    const languages = [...new Set(allSongs.map((song) => song.Language))];
+
+    return (
+      <View style={styles.container}>
+        <FlatList
+          data={languages}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() => handleLanguageSelect(item)}
+            >
+              <Text style={styles.cardTitle}>{item}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item}
+        />
+      </View>
+    );
+  };
+
+  const renderSongs = () => (
+    <View style={styles.container}>
+      <FlatList
+        data={songsData}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => handleSongSelect(item)}
+          >
+            <View style={styles.songInfo}>
+              <Text style={styles.listTitle}>{item.Title}</Text>
+              {songNumberKey && (
+                <Text style={styles.songDetail}>
+                  {item[bookKey]} - {item[songNumberKey]}{" "}
+                </Text>
+              )}
+            </View>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.Title}
+      />
+    </View>
+  );
+
+  const renderSongDetails = () => (
+    <ScrollView style={styles.container}>
+      <View style={styles.detailsContainer}>
+        {selectedSong && songNumberKey && bookKey && (
+          <>
+            <Text style={styles.lyrics_songNumber}>
+              {selectedSong[bookKey]} - {selectedSong[songNumberKey]}{" "}
+              {/* Display song book and number */}
+            </Text>
+            <Text style={styles.lyrics_bookTitle}>
+              {selectedSong.Book} {/* Assuming "Book" is the book name key */}
+            </Text>
+            <TouchableOpacity
+              onPress={() => Linking.openURL(selectedSong["Link / Audio"])}
+            >
+              <Text style={styles.link}>Listen to Song</Text>
+            </TouchableOpacity>
+            <Text style={styles.lyrics}>{selectedSong.Lyrics}</Text>
+          </>
+        )}
+      </View>
+    </ScrollView>
+  );
+
+  if (!fontsLoaded) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.safeContainer}>
+      {view === "languages" && renderLanguages()}
+      {view === "songs" && renderSongs()}
+      {view === "song" && renderSongDetails()}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  safeContainer: {
+    flex: 1,
+    backgroundColor: "#182026",
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#182026",
+    padding: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: "#182026",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  card: {
+    backgroundColor: "#2c3e50",
+    padding: 15,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontFamily: "Roboto",
+    color: "#ffffff",
+  },
+  songInfo: {
+    flexDirection: "column", // Use column direction to stack items vertically
+  },
+  listTitle: {
+    fontSize: 16,
+    fontFamily: "Roboto",
+    color: "#ffffff",
+    marginBottom: 5, // Add space between title and other details
+  },
+  songDetail: {
+    fontSize: 14,
+    fontFamily: "Roboto",
+    color: "#cccccc",
+  },
+  lyrics_songNumber: {
+    fontSize: 24,
+    fontFamily: "Roboto",
+    color: "#ffffff",
+  },
+  lyrics_bookTitle: {
+    fontSize: 22,
+    fontFamily: "Roboto",
+    color: "#ffffff",
+    marginBottom: 5,
+  },
+  link: {
+    fontSize: 14,
+    fontFamily: "Roboto",
+    color: "#1e90ff",
+    marginBottom: 15,
+  },
+  lyrics: {
+    fontSize: 18,
+    fontFamily: "Roboto",
+    color: "#ffffff",
+  },
+});

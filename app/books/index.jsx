@@ -105,15 +105,14 @@ export default function BooksIndex() {
       <View style={styles.detailsContainer}>
         {selectedSong && songNumberKey && (
           <>
-            <Text style={styles.songNumber}>
-              Song No: {selectedSong[songNumberKey]}
+            <Text style={styles.lyrics_songNumber}>
+              {selectedSong[songNumberKey]}
             </Text>
-            <Text style={styles.bookTitle}>Book: {selectedBook}</Text>
-            <Text style={styles.songTitle}>{selectedSong.Title}</Text>
+            <Text style={styles.lyrics_bookTitle}>{selectedBook}</Text>
             <TouchableOpacity
               onPress={() => Linking.openURL(selectedSong["Link / Audio"])}
             >
-              <Text style={styles.link}>Listen</Text>
+              <Text style={styles.link}>Listen to Song </Text>
             </TouchableOpacity>
             <Text style={styles.lyrics}>{selectedSong.Lyrics}</Text>
           </>
@@ -183,6 +182,17 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     marginBottom: 5,
   },
+  lyrics_songNumber: {
+    fontSize: 24,
+    fontFamily: "Roboto",
+    color: "#ffffff",
+  },
+  lyrics_bookTitle: {
+    fontSize: 22,
+    fontFamily: "Roboto",
+    color: "#ffffff",
+    marginBottom: 5,
+  },
   songTitle: {
     fontSize: 20,
     fontFamily: "Roboto",
@@ -193,10 +203,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "Roboto",
     color: "#1e90ff",
-    marginBottom: 10,
+    marginBottom: 15,
   },
   lyrics: {
-    fontSize: 1,
+    fontSize: 18,
     fontFamily: "Roboto",
     color: "#ffffff",
   },

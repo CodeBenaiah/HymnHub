@@ -6,40 +6,8 @@ import { usePathname } from "expo-router";
 export default function HomeScreen() {
   const pathname = usePathname();
 
-  return (
-    <SafeAreaView style={styles.safeContainer}>
-      <View style={styles.container}>
-        <View style={styles.content}>
-          {pathname === "/books" && <BooksContent />}
-          {pathname === "/authors" && <AuthorsContent />}
-          {pathname === "/favourites" && <FavouritesContent />}
-          {pathname === "/search" && <SearchContent />}
-          {pathname === "/settings" && <SettingsContent />}
-        </View>
-      </View>
-    </SafeAreaView>
-  );
+  return <SafeAreaView style={styles.safeContainer}></SafeAreaView>;
 }
-
-function BooksContent() {
-  const books = [
-    { id: 1, title: "Hymns of Faith" },
-    { id: 2, title: "Songs of Praise" },
-    // Add more books here
-  ];
-
-  return (
-    <View style={styles.cardContainer}>
-      {books.map((book) => (
-        <View key={book.id} style={styles.card}>
-          <Text style={styles.cardTitle}>{book.title}</Text>
-        </View>
-      ))}
-    </View>
-  );
-}
-
-// Similarly, create AuthorsContent, FavouritesContent, SearchContent, and SettingsContent components
 
 const styles = StyleSheet.create({
   safeContainer: {

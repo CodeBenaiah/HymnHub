@@ -41,70 +41,68 @@ export default function Layout() {
         <Slot />
 
         {pathname !== "/splash" && ( // Conditionally render navigation bar
-          <SafeAreaView style={styles.navigationSafeArea}>
-            <View style={styles.navigation}>
-              <Link href="/books" asChild>
-                <TouchableOpacity style={styles.iconContainer}>
-                  <Image
-                    source={booksIcon}
-                    style={[
-                      styles.icon,
-                      pathname === "/books" && styles.activeIcon,
-                    ]}
-                  />
-                  <Text style={styles.label}>Books</Text>
-                </TouchableOpacity>
-              </Link>
-              <Link href="/language" asChild>
-                <TouchableOpacity style={styles.iconContainer}>
-                  <Image
-                    source={languageIcon}
-                    style={[
-                      styles.icon,
-                      pathname === "/language" && styles.activeIcon,
-                    ]}
-                  />
-                  <Text style={styles.label}>Language</Text>
-                </TouchableOpacity>
-              </Link>
-              <Link href="/search" asChild>
-                <TouchableOpacity style={styles.iconContainer}>
-                  <Image
-                    source={searchIcon}
-                    style={[
-                      styles.icon,
-                      pathname === "/search" && styles.activeIcon,
-                    ]}
-                  />
-                  <Text style={styles.label}>Search</Text>
-                </TouchableOpacity>
-              </Link>
-              <Link href="/authors" asChild>
-                <TouchableOpacity style={styles.iconContainer}>
-                  <Image
-                    source={authorIcon}
-                    style={[
-                      styles.icon,
-                      pathname === "/authors" && styles.activeIcon,
-                    ]}
-                  />
-                  <Text style={styles.label}>Authors</Text>
-                </TouchableOpacity>
-              </Link>
-              <Link href="/bookmarked" asChild>
-                <TouchableOpacity style={styles.iconContainer}>
-                  <Image
-                    source={bookmarkIcon}
-                    style={[
-                      styles.icon,
-                      pathname === "/bookmarked" && styles.activeIcon,
-                    ]}
-                  />
-                  <Text style={styles.label}>Bookmark</Text>
-                </TouchableOpacity>
-              </Link>
-            </View>
-          </SafeAreaView>
+          <View style={styles.navigation}>
+            <Link href="/books" asChild>
+              <TouchableOpacity style={styles.iconContainer}>
+                <Image
+                  source={booksIcon}
+                  style={[
+                    styles.icon,
+                    pathname === "/books" && styles.activeIcon,
+                  ]}
+                />
+                <Text style={styles.label}>Books</Text>
+              </TouchableOpacity>
+            </Link>
+            <Link href="/language" asChild>
+              <TouchableOpacity style={styles.iconContainer}>
+                <Image
+                  source={languageIcon}
+                  style={[
+                    styles.icon,
+                    pathname === "/language" && styles.activeIcon,
+                  ]}
+                />
+                <Text style={styles.label}>Language</Text>
+              </TouchableOpacity>
+            </Link>
+            <Link href="/search" asChild>
+              <TouchableOpacity style={styles.iconContainer}>
+                <Image
+                  source={searchIcon}
+                  style={[
+                    styles.icon,
+                    pathname === "/search" && styles.activeIcon,
+                  ]}
+                />
+                <Text style={styles.label}>Search</Text>
+              </TouchableOpacity>
+            </Link>
+            <Link href="/authors" asChild>
+              <TouchableOpacity style={styles.iconContainer}>
+                <Image
+                  source={authorIcon}
+                  style={[
+                    styles.icon,
+                    pathname === "/authors" && styles.activeIcon,
+                  ]}
+                />
+                <Text style={styles.label}>Authors</Text>
+              </TouchableOpacity>
+            </Link>
+            <Link href="/bookmarked" asChild>
+              <TouchableOpacity style={styles.iconContainer}>
+                <Image
+                  source={bookmarkIcon}
+                  style={[
+                    styles.icon,
+                    pathname === "/bookmarked" && styles.activeIcon,
+                  ]}
+                />
+                <Text style={styles.label}>Bookmark</Text>
+              </TouchableOpacity>
+            </Link>
+          </View>
         )}
       </View>
     </SafeAreaView>
@@ -132,6 +130,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingBottom: 10,
     borderBottomWidth: 1,
+    borderColor: "#111", // Add a border to the header
   },
   title: {
     fontSize: 45,
@@ -143,15 +142,13 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto",
     color: "#ffffff",
   },
-  navigationSafeArea: {
-    backgroundColor: "#182026", // Match background color to main container
-  },
   navigation: {
     flexDirection: "row",
     justifyContent: "space-around",
     paddingVertical: 15,
     borderTopWidth: 1,
     borderColor: "#111", // Slightly lighter border for visibility
+    backgroundColor: "#182026", // Background color for the navigation bar
   },
   iconContainer: {
     alignItems: "center",
