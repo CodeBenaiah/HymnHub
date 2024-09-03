@@ -1,12 +1,12 @@
 import React from "react";
-import { View, Image, TouchableOpacity, StyleSheet, Text } from "react-native";
+import { View, Image, TouchableOpacity, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Slot, Link, usePathname } from "expo-router";
+import { Slot, Link, usePathname, useRouter } from "expo-router"; // Import useRouter
 import { useFonts } from "expo-font";
 import { ActivityIndicator } from "react-native";
+import styles from "../assets/styles/styles.js";
 
 // Import your custom icons
-const booksIcon = require("../assets/images/books.png");
 const languageIcon = require("../assets/images/language.png");
 const searchIcon = require("../assets/images/search.png");
 const authorIcon = require("../assets/images/author.png");
@@ -19,7 +19,9 @@ export default function Layout() {
   });
 
   const pathname = usePathname();
+  const router = useRouter();
 
+  // If fonts are not loaded, display a loading indicator
   if (!fontsLoaded) {
     return (
       <View style={styles.loadingContainer}>
@@ -42,18 +44,6 @@ export default function Layout() {
 
         {pathname !== "/splash" && ( // Conditionally render navigation bar
           <View style={styles.navigation}>
-            <Link href="/books" asChild>
-              <TouchableOpacity style={styles.iconContainer}>
-                <Image
-                  source={booksIcon}
-                  style={[
-                    styles.icon,
-                    pathname === "/books" && styles.activeIcon,
-                  ]}
-                />
-                <Text style={styles.label}>Books</Text>
-              </TouchableOpacity>
-            </Link>
             <Link href="/language" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image
@@ -108,63 +98,3 @@ export default function Layout() {
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  safeContainer: {
-    flex: 1,
-    backgroundColor: "#182026",
-  },
-  loadingContainer: {
-    flex: 1,
-    backgroundColor: "#182026",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#182026", // Main background color
-  },
-  header: {
-    alignItems: "flex-start",
-    paddingHorizontal: 20,
-    paddingTop: 20,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderColor: "#111", // Add a border to the header
-  },
-  title: {
-    fontSize: 45,
-    fontFamily: "BebasNeue",
-    color: "#ffffff",
-  },
-  subtitle: {
-    fontSize: 15,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-  },
-  navigation: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    paddingVertical: 15,
-    borderTopWidth: 1,
-    borderColor: "#111", // Slightly lighter border for visibility
-    backgroundColor: "#182026", // Background color for the navigation bar
-  },
-  iconContainer: {
-    alignItems: "center",
-  },
-  icon: {
-    width: 27,
-    height: 27,
-    tintColor: "#ffffff", // Default icon color
-  },
-  label: {
-    color: "#ffffff",
-    fontFamily: "Roboto",
-    fontSize: 12,
-    marginTop: 5,
-  },
-  activeIcon: {
-    tintColor: "#FFD700", // Gold color for active icon
-  },
-});

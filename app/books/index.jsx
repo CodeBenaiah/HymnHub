@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
   Linking,
@@ -10,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useFonts } from "expo-font";
+import styles from "../../assets/styles/styles.js";
 
 // Import the JSON data
 const data = require("../../assets/data.json");
@@ -60,7 +60,7 @@ export default function BooksIndex() {
   };
 
   const renderBooks = () => (
-    <View style={styles.container}>
+    <View style={styles.books_container}>
       <FlatList
         data={Object.keys(data)}
         renderItem={({ item }) => (
@@ -77,7 +77,7 @@ export default function BooksIndex() {
   );
 
   const renderSongs = () => (
-    <View style={styles.container}>
+    <View style={styles.books_container}>
       <FlatList
         data={songsData}
         renderItem={({ item }) => (
@@ -129,85 +129,3 @@ export default function BooksIndex() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  safeContainer: {
-    flex: 1,
-    backgroundColor: "#182026",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#182026",
-    padding: 10,
-  },
-  loadingContainer: {
-    flex: 1,
-    backgroundColor: "#182026",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  card: {
-    backgroundColor: "#2c3e50",
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-  },
-  cardSubtitle: {
-    fontSize: 14,
-    fontFamily: "Roboto",
-    color: "#cccccc",
-  },
-  detailsContainer: {
-    paddingHorizontal: 20,
-  },
-  bookTitle: {
-    fontSize: 18,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-    marginBottom: 10,
-  },
-  listTitle: {
-    fontSize: 14,
-    fontFamily: "Roboto",
-    color: "#eee",
-  },
-  songNumber: {
-    fontSize: 16,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-    marginBottom: 5,
-  },
-  lyrics_songNumber: {
-    fontSize: 24,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-  },
-  lyrics_bookTitle: {
-    fontSize: 22,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-    marginBottom: 5,
-  },
-  songTitle: {
-    fontSize: 20,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-    marginBottom: 10,
-  },
-  link: {
-    fontSize: 14,
-    fontFamily: "Roboto",
-    color: "#1e90ff",
-    marginBottom: 15,
-  },
-  lyrics: {
-    fontSize: 18,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-  },
-});

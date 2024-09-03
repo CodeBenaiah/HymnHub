@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useFonts } from "expo-font";
+import styles from "../../assets/styles/styles.js";
 
 // Import the JSON data
 const data = require("../../assets/data.json");
@@ -76,7 +77,7 @@ export default function LanguageIndex() {
     const languages = [...new Set(allSongs.map((song) => song.Language))];
 
     return (
-      <View style={styles.container}>
+      <View style={styles.books_container}>
         <FlatList
           data={languages}
           renderItem={({ item }) => (
@@ -94,7 +95,7 @@ export default function LanguageIndex() {
   };
 
   const renderSongs = () => (
-    <View style={styles.container}>
+    <View style={styles.books_container}>
       <FlatList
         data={songsData}
         renderItem={({ item }) => (
@@ -118,7 +119,7 @@ export default function LanguageIndex() {
   );
 
   const renderSongDetails = () => (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.books_container}>
       <View style={styles.detailsContainer}>
         {selectedSong && songNumberKey && bookKey && (
           <>
@@ -157,68 +158,3 @@ export default function LanguageIndex() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  safeContainer: {
-    flex: 1,
-    backgroundColor: "#182026",
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#182026",
-    padding: 10,
-  },
-  loadingContainer: {
-    flex: 1,
-    backgroundColor: "#182026",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  card: {
-    backgroundColor: "#2c3e50",
-    padding: 15,
-    borderRadius: 8,
-    marginBottom: 10,
-  },
-  cardTitle: {
-    fontSize: 18,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-  },
-  songInfo: {
-    flexDirection: "column", // Use column direction to stack items vertically
-  },
-  listTitle: {
-    fontSize: 16,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-    marginBottom: 5, // Add space between title and other details
-  },
-  songDetail: {
-    fontSize: 14,
-    fontFamily: "Roboto",
-    color: "#cccccc",
-  },
-  lyrics_songNumber: {
-    fontSize: 24,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-  },
-  lyrics_bookTitle: {
-    fontSize: 22,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-    marginBottom: 5,
-  },
-  link: {
-    fontSize: 14,
-    fontFamily: "Roboto",
-    color: "#1e90ff",
-    marginBottom: 15,
-  },
-  lyrics: {
-    fontSize: 18,
-    fontFamily: "Roboto",
-    color: "#ffffff",
-  },
-});
