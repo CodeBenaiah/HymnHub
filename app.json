@@ -34,10 +34,22 @@
       "output": "static",
       "bundler": "metro"
     },
-    "assetBundlePatterns": ["**/*"],
-    "plugins": ["expo-router"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "plugins": [
+      "expo-router"
+    ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "0d35d0f7-de39-45d7-854c-dc9c08767877"
+      }
     }
   }
 }
