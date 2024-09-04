@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
-  ScrollView,
 } from "react-native";
 import { useFonts } from "expo-font";
+import SongDetails from "../SongDetails.jsx"; // Import SongDetails component
 import styles from "../../assets/styles/styles.js";
 
 // Import the JSON data
@@ -20,7 +19,7 @@ export default function LanguageIndex() {
     BebasNeue: require("../../assets/fonts/BebasNeue-Regular.ttf"),
   });
 
-  const [view, setView] = useState("languages"); // 'languages' or 'songs'
+  const [view, setView] = useState("languages"); // 'languages', 'songs', or 'song'
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [songsData, setSongsData] = useState([]);
   const [allSongs, setAllSongs] = useState([]);
@@ -49,7 +48,7 @@ export default function LanguageIndex() {
             ].includes(key)
         )
       );
-      setBookKey("Song Book"); // Assuming 'Book' is the key for song book
+      setBookKey("Song Book"); // Assuming 'Song Book' is the key for song book
     }
   }, []);
 
@@ -78,6 +77,7 @@ export default function LanguageIndex() {
 
     return (
       <View style={styles.books_container}>
+        <Text style={styles.availableBooksText}>Languages</Text>
         <FlatList
           data={languages}
           renderItem={({ item }) => (
@@ -107,7 +107,7 @@ export default function LanguageIndex() {
               <Text style={styles.listTitle}>{item.Title}</Text>
               {songNumberKey && (
                 <Text style={styles.songDetail}>
-                  {item[bookKey]} - {item[songNumberKey]}{" "}
+                  {item[bookKey]} - {item[songNumberKey]}
                 </Text>
               )}
             </View>
@@ -116,30 +116,6 @@ export default function LanguageIndex() {
         keyExtractor={(item) => item.Title}
       />
     </View>
-  );
-
-  const renderSongDetails = () => (
-    <ScrollView style={styles.books_container}>
-      <View style={styles.detailsContainer}>
-        {selectedSong && songNumberKey && bookKey && (
-          <>
-            <Text style={styles.lyrics_songNumber}>
-              {selectedSong[bookKey]} - {selectedSong[songNumberKey]}{" "}
-              {/* Display song book and number */}
-            </Text>
-            <Text style={styles.lyrics_bookTitle}>
-              {selectedSong.Book} {/* Assuming "Book" is the book name key */}
-            </Text>
-            <TouchableOpacity
-              onPress={() => Linking.openURL(selectedSong["Link / Audio"])}
-            >
-              <Text style={styles.link}>Listen to Song</Text>
-            </TouchableOpacity>
-            <Text style={styles.lyrics}>{selectedSong.Lyrics}</Text>
-          </>
-        )}
-      </View>
-    </ScrollView>
   );
 
   if (!fontsLoaded) {
@@ -154,7 +130,13 @@ export default function LanguageIndex() {
     <View style={styles.safeContainer}>
       {view === "languages" && renderLanguages()}
       {view === "songs" && renderSongs()}
-      {view === "song" && renderSongDetails()}
+      {view === "song" && selectedSong && songNumberKey && bookKey && (
+        <SongDetails
+          selectedSong={selectedSong}
+          selectedBook={selectedSong[bookKey]}
+          songNumberKey={songNumberKey}
+        />
+      )}
     </View>
   );
 }

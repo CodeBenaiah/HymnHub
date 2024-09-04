@@ -15,7 +15,9 @@ const bookmarkIcon = require("../assets/images/bookmark.png");
 export default function Layout() {
   const [fontsLoaded] = useFonts({
     BebasNeue: require("../assets/fonts/BebasNeue-Regular.ttf"),
-    Roboto: require("../assets/fonts/Roboto-Regular.ttf"),
+    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
+    Poppins_Bold: require("../assets/fonts/Poppins-Bold.ttf"),
+    Poppins_Light: require("../assets/fonts/Poppins-Light.ttf"),
   });
 
   const pathname = usePathname();

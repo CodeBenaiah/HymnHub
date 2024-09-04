@@ -4,11 +4,10 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Linking,
   ActivityIndicator,
-  ScrollView,
 } from "react-native";
 import { useFonts } from "expo-font";
+import SongDetails from "./SongDetails.jsx"; // Import the common SongDetails component
 import styles from "../assets/styles/styles.js";
 
 // Import the JSON data
@@ -16,8 +15,10 @@ const data = require("../assets/data.json");
 
 export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
-    Roboto: require("../assets/fonts/Roboto-Regular.ttf"),
     BebasNeue: require("../assets/fonts/BebasNeue-Regular.ttf"),
+    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
+    Poppins_Bold: require("../assets/fonts/Poppins-Bold.ttf"),
+    Poppins_Light: require("../assets/fonts/Poppins-Light.ttf"),
   });
 
   const [view, setView] = useState("books"); // 'books', 'songs', or 'song'
@@ -62,7 +63,7 @@ export default function HomeScreen() {
   const renderBooks = () => (
     <View style={styles.books_container}>
       {/* Add the "Available Books" text */}
-      <Text style={styles.availableBooksText}>Available Books</Text>
+      <Text style={styles.availableBooksText}>Books</Text>
 
       <FlatList
         data={Object.keys(data)}
@@ -103,34 +104,17 @@ export default function HomeScreen() {
     </View>
   );
 
-  const renderSongDetails = () => (
-    <ScrollView style={styles.container}>
-      <View style={styles.detailsContainer}>
-        {selectedSong && songNumberKey && (
-          <>
-            <Text style={styles.lyrics_songNumber}>
-              {selectedSong[songNumberKey]}
-            </Text>
-            <Text style={styles.lyrics_bookTitle}>{selectedBook}</Text>
-            {selectedSong["Link / Audio"] && (
-              <TouchableOpacity
-                onPress={() => Linking.openURL(selectedSong["Link / Audio"])}
-              >
-                <Text style={styles.link}>Listen to Song</Text>
-              </TouchableOpacity>
-            )}
-            <Text style={styles.lyrics}>{selectedSong.Lyrics}</Text>
-          </>
-        )}
-      </View>
-    </ScrollView>
-  );
-
   return (
     <View style={styles.safeContainer}>
       {view === "books" && renderBooks()}
       {view === "songs" && renderSongs()}
-      {view === "song" && renderSongDetails()}
+      {view === "song" && selectedSong && songNumberKey && (
+        <SongDetails
+          selectedSong={selectedSong}
+          selectedBook={selectedBook}
+          songNumberKey={songNumberKey}
+        />
+      )}
     </View>
   );
 }

@@ -17,7 +17,7 @@ export default function AuthorsScreen() {
 
   return (
     <View style={styles.splash_container}>
-      <Text style={styles.comingSoonText}>Authors Page</Text>
+      <Text style={styles.comingSoonText}>Bookmark Page</Text>
       <Text style={styles.comingSoonSubText}>Coming Soon</Text>
     </View>
   );

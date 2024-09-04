@@ -4,20 +4,21 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  Linking,
   ActivityIndicator,
-  ScrollView,
 } from "react-native";
 import { useFonts } from "expo-font";
 import styles from "../../assets/styles/styles.js";
+import SongDetails from "../SongDetails.jsx"; // Import SongDetails component
 
 // Import the JSON data
 const data = require("../../assets/data.json");
 
 export default function BooksIndex() {
   const [fontsLoaded] = useFonts({
-    Roboto: require("../../assets/fonts/Roboto-Regular.ttf"),
     BebasNeue: require("../../assets/fonts/BebasNeue-Regular.ttf"),
+    Poppins: require("../../assets/fonts/Poppins-Regular.ttf"),
+    Poppins_Bold: require("../../assets/fonts/Poppins-Bold.ttf"),
+    Poppins_Light: require("../../assets/fonts/Poppins-Light.ttf"),
   });
 
   const [view, setView] = useState("books"); // 'books', 'songs', or 'song'
@@ -100,32 +101,17 @@ export default function BooksIndex() {
     </View>
   );
 
-  const renderSongDetails = () => (
-    <ScrollView style={styles.container}>
-      <View style={styles.detailsContainer}>
-        {selectedSong && songNumberKey && (
-          <>
-            <Text style={styles.lyrics_songNumber}>
-              {selectedSong[songNumberKey]}
-            </Text>
-            <Text style={styles.lyrics_bookTitle}>{selectedBook}</Text>
-            <TouchableOpacity
-              onPress={() => Linking.openURL(selectedSong["Link / Audio"])}
-            >
-              <Text style={styles.link}>Listen to Song </Text>
-            </TouchableOpacity>
-            <Text style={styles.lyrics}>{selectedSong.Lyrics}</Text>
-          </>
-        )}
-      </View>
-    </ScrollView>
-  );
-
   return (
     <View style={styles.safeContainer}>
       {view === "books" && renderBooks()}
       {view === "songs" && renderSongs()}
-      {view === "song" && renderSongDetails()}
+      {view === "song" && selectedSong && (
+        <SongDetails
+          selectedSong={selectedSong}
+          selectedBook={selectedBook}
+          songNumberKey={songNumberKey}
+        />
+      )}
     </View>
   );
 }

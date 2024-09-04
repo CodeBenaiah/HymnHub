@@ -12,7 +12,9 @@ const commonColors = {
 
 const commonFonts = {
     titleFont: "BebasNeue",
-    bodyFont: "Roboto",
+    headerFont: "Poppins",
+    bodyFont: "Poppins_Light",
+
 };
 
 const commonStyles = {
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
         color: commonColors.textPrimary,
     },
     subtitle: {
-        fontSize: 15,
+        fontSize: 12,
         fontFamily: commonFonts.bodyFont,
         color: commonColors.textPrimary,
     },
@@ -117,9 +119,8 @@ const styles = StyleSheet.create({
     // Tabs Styles
     availableBooksText: {
         fontSize: 24,
-        fontFamily: commonFonts.titleFont,
+        fontFamily: commonFonts.headerFont,
         color: commonColors.textPrimary,
-        fontWeight: "bold",
         marginBottom: 10,
         padding: 10,
 
@@ -156,26 +157,9 @@ const styles = StyleSheet.create({
         fontSize: 14,
         ...commonStyles.textSecondary,
     },
-    detailsContainer: {
-        paddingHorizontal: 20,
-    },
+
     lyrics_songNumber: {
         fontSize: 24,
-        ...commonStyles.textPrimary,
-    },
-    lyrics_bookTitle: {
-        fontSize: 22,
-        ...commonStyles.textPrimary,
-        marginBottom: 5,
-    },
-    link: {
-        fontSize: 14,
-        fontFamily: commonFonts.bodyFont,
-        color: commonColors.linkColor,
-        marginBottom: 15,
-    },
-    lyrics: {
-        fontSize: 18,
         ...commonStyles.textPrimary,
     },
     bookTitle: {
@@ -187,6 +171,103 @@ const styles = StyleSheet.create({
         fontSize: 16,
         ...commonStyles.textPrimary,
         marginBottom: 5,
+    },
+
+    //Coming Soon
+    comingSoonContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#182026", // Main background color
+    },
+    comingSoonText: {
+        fontSize: 32,
+        fontFamily: "Poppins_Bold",
+        color: "#ffffff",
+        marginBottom: 10,
+    },
+    comingSoonSubText: {
+        fontSize: 18,
+        fontFamily: "Poppins_Light",
+        color: "#aaa",
+    },
+
+    //SongDetails
+    detailsContainer: {
+        paddingHorizontal: 20,
+        paddingVertical: 10, // Add some vertical padding
+    },
+    lyrics_bookTitle: {
+        fontSize: 22,
+        color: "#fff",
+        marginBottom: 5,
+        fontFamily: "Poppins_Bold", // Use the bold font for titles
+    },
+    lyrics_key: {
+        fontSize: 18,
+        color: "#ddd",
+        marginBottom: 10,
+        fontFamily: "Poppins", // Use a regular font for the key
+    },
+    link: {
+        fontSize: 16,
+        color: "#76ABAE",
+        marginBottom: 15,
+        fontFamily: "Poppins", // Use the regular font for links
+    },
+    lyrics: {
+        fontSize: 18,
+        color: "#eee",
+        marginTop: 10,
+        fontFamily: "Poppins_Light", // Use a lighter font for lyrics
+    },
+
+    //SearchTab
+
+    searchContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        margin: 20,
+        paddingHorizontal: 10,
+    },
+    searchInput: {
+        flex: 1,
+        height: 55,
+        borderColor: "#444",
+        borderWidth: 1,
+        borderRadius: 20,
+        paddingHorizontal: 15,
+        fontSize: 18,
+        color: "#ffffff", // Text color inside input
+        fontFamily: "Poppins",
+    },
+    filterIcon: {
+        width: 25,
+        height: 25,
+        marginLeft: 10,
+    },
+    hymnItem: {
+        flexDirection: "row",
+        alignItems: "center",
+        paddingVertical: 10,
+        borderBottomWidth: 1,
+        borderColor: "#444",
+    },
+    hymnNumber: {
+        fontSize: 18,
+        fontFamily: "Poppins",
+        color: "#ffffff",
+        width: 40,
+    },
+    hymnTitle: {
+        fontSize: 18,
+        fontFamily: "Poppins",
+        color: "#ffffff",
+    },
+    bookName: {
+        fontSize: 14,
+        fontFamily: "Poppins_Light",
+        color: "#bbb",
     },
 });
 
