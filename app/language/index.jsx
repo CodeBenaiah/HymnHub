@@ -113,7 +113,9 @@ export default function LanguageIndex() {
             </View>
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => item.Title}
+        keyExtractor={(item) =>
+          `${item.Title}-${item[songNumberKey]}-${item[bookKey]}`
+        } // Updated keyExtractor
       />
     </View>
   );

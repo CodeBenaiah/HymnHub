@@ -7,13 +7,13 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useFonts } from "expo-font";
+import SongDetails from "../SongDetails.jsx"; // Import the common SongDetails component
 import styles from "../../assets/styles/styles.js";
-import SongDetails from "../SongDetails.jsx"; // Import SongDetails component
 
 // Import the JSON data
 const data = require("../../assets/data.json");
 
-export default function BooksIndex() {
+export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
     BebasNeue: require("../../assets/fonts/BebasNeue-Regular.ttf"),
     Poppins: require("../../assets/fonts/Poppins-Regular.ttf"),
@@ -62,6 +62,9 @@ export default function BooksIndex() {
 
   const renderBooks = () => (
     <View style={styles.books_container}>
+      {/* Add the "Available Books" text */}
+      <Text style={styles.availableBooksText}>Books</Text>
+
       <FlatList
         data={Object.keys(data)}
         renderItem={({ item }) => (
@@ -96,7 +99,7 @@ export default function BooksIndex() {
             </View>
           </TouchableOpacity>
         )}
-        keyExtractor={(item) => item[songNumberKey].toString()}
+        keyExtractor={(item) => item[songNumberKey]?.toString() || item.Title}
       />
     </View>
   );
@@ -105,7 +108,7 @@ export default function BooksIndex() {
     <View style={styles.safeContainer}>
       {view === "books" && renderBooks()}
       {view === "songs" && renderSongs()}
-      {view === "song" && selectedSong && (
+      {view === "song" && selectedSong && songNumberKey && (
         <SongDetails
           selectedSong={selectedSong}
           selectedBook={selectedBook}

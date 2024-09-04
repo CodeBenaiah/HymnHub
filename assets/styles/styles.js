@@ -14,7 +14,6 @@ const commonFonts = {
     titleFont: "BebasNeue",
     headerFont: "Poppins",
     bodyFont: "Poppins_Light",
-
 };
 
 const commonStyles = {
@@ -77,8 +76,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingTop: 20,
         paddingBottom: 10,
-        borderBottomWidth: 1,
-        borderColor: commonColors.borderColor,
     },
     title: {
         fontSize: 45,
@@ -123,7 +120,6 @@ const styles = StyleSheet.create({
         color: commonColors.textPrimary,
         marginBottom: 10,
         padding: 10,
-
     },
     books_container: {
         ...commonStyles.container,
@@ -173,7 +169,7 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
 
-    //Coming Soon
+    // Coming Soon
     comingSoonContainer: {
         flex: 1,
         justifyContent: "center",
@@ -182,48 +178,47 @@ const styles = StyleSheet.create({
     },
     comingSoonText: {
         fontSize: 32,
-        fontFamily: "Poppins_Bold",
+        fontFamily: commonFonts.headerFont,
         color: "#ffffff",
         marginBottom: 10,
     },
     comingSoonSubText: {
         fontSize: 18,
-        fontFamily: "Poppins_Light",
+        fontFamily: commonFonts.bodyFont,
         color: "#aaa",
     },
 
-    //SongDetails
+    // SongDetails
     detailsContainer: {
         paddingHorizontal: 20,
         paddingVertical: 10, // Add some vertical padding
     },
     lyrics_bookTitle: {
         fontSize: 22,
-        color: "#fff",
+        color: commonColors.textPrimary,
         marginBottom: 5,
-        fontFamily: "Poppins_Bold", // Use the bold font for titles
+        fontFamily: commonFonts.headerFont,
     },
     lyrics_key: {
         fontSize: 18,
-        color: "#ddd",
+        color: commonColors.textSecondary,
         marginBottom: 10,
-        fontFamily: "Poppins", // Use a regular font for the key
+        fontFamily: commonFonts.bodyFont,
     },
     link: {
         fontSize: 16,
-        color: "#76ABAE",
+        color: commonColors.linkColor,
         marginBottom: 15,
-        fontFamily: "Poppins", // Use the regular font for links
+        fontFamily: commonFonts.bodyFont,
     },
     lyrics: {
         fontSize: 18,
-        color: "#eee",
+        color: commonColors.textPrimary,
         marginTop: 10,
-        fontFamily: "Poppins_Light", // Use a lighter font for lyrics
+        fontFamily: commonFonts.bodyFont,
     },
 
-    //SearchTab
-
+    // SearchTab
     searchContainer: {
         flexDirection: "row",
         alignItems: "center",
@@ -233,13 +228,13 @@ const styles = StyleSheet.create({
     searchInput: {
         flex: 1,
         height: 55,
-        borderColor: "#444",
+        borderColor: commonColors.borderColor,
         borderWidth: 1,
         borderRadius: 20,
         paddingHorizontal: 15,
         fontSize: 18,
-        color: "#ffffff", // Text color inside input
-        fontFamily: "Poppins",
+        color: commonColors.textPrimary, // Text color inside input
+        fontFamily: commonFonts.bodyFont,
     },
     filterIcon: {
         width: 25,
@@ -249,26 +244,71 @@ const styles = StyleSheet.create({
     hymnItem: {
         flexDirection: "row",
         alignItems: "center",
-        paddingVertical: 10,
+        padding: 15,
         borderBottomWidth: 1,
-        borderColor: "#444",
+        borderColor: commonColors.borderColor,
     },
     hymnNumber: {
         fontSize: 18,
-        fontFamily: "Poppins",
-        color: "#ffffff",
+        fontFamily: commonFonts.bodyFont,
+        color: commonColors.textPrimary,
         width: 40,
     },
     hymnTitle: {
         fontSize: 18,
-        fontFamily: "Poppins",
-        color: "#ffffff",
+        fontFamily: commonFonts.bodyFont,
+        color: commonColors.textPrimary,
     },
     bookName: {
         fontSize: 14,
-        fontFamily: "Poppins_Light",
-        color: "#bbb",
+        fontFamily: commonFonts.bodyFont,
+        color: commonColors.textSecondary,
     },
+
+    // Filter Styles
+    modalContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    modalContent: {
+        width: "80%",
+        padding: 20,
+        backgroundColor: commonColors.cardBackground,
+        borderRadius: 10,
+        alignItems: "flex-start",
+    },
+    scrollView: {
+        width: "100%",
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontFamily: commonFonts.headerFont,
+        color: commonColors.textPrimary,
+    },
+    filterCategory: {
+        fontSize: 16,
+        marginTop: 10,
+        fontFamily: commonFonts.headerFont,
+        color: commonColors.textPrimary,
+    },
+    switchContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+    },
+    switchLabel: {
+        marginRight: 10,
+        fontFamily: commonFonts.bodyFont,
+        color: commonColors.textPrimary,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 10,
+        width: '100%',
+    },
+
 });
 
 export default styles;

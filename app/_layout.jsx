@@ -11,6 +11,7 @@ const languageIcon = require("../assets/images/language.png");
 const searchIcon = require("../assets/images/search.png");
 const authorIcon = require("../assets/images/author.png");
 const bookmarkIcon = require("../assets/images/bookmark.png");
+const booksIcon = require("../assets/images/books.png");
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -38,7 +39,6 @@ export default function Layout() {
         {pathname !== "/splash" && ( // Conditionally render header
           <View style={styles.header}>
             <Text style={styles.title}>HymnHub</Text>
-            <Text style={styles.subtitle}>Hub for Christian Songs</Text>
           </View>
         )}
 
@@ -46,6 +46,18 @@ export default function Layout() {
 
         {pathname !== "/splash" && ( // Conditionally render navigation bar
           <View style={styles.navigation}>
+            <Link href="/books" asChild>
+              <TouchableOpacity style={styles.iconContainer}>
+                <Image
+                  source={booksIcon}
+                  style={[
+                    styles.icon,
+                    pathname === "/books" && styles.activeIcon,
+                  ]}
+                />
+                <Text style={styles.label}>Books</Text>
+              </TouchableOpacity>
+            </Link>
             <Link href="/language" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image

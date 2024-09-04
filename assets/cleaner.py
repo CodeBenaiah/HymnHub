@@ -1,4 +1,5 @@
 import json
+import re
 
 
 def remove_leading_spaces_in_title_and_lyrics(json_file_path):
@@ -14,9 +15,10 @@ def remove_leading_spaces_in_title_and_lyrics(json_file_path):
             if "Title" in song:
                 song["Title"] = song["Title"].lstrip()
 
-            # Remove leading spaces in the lyrics
+            # Remove leading spaces in the lyrics, including spaces after \n
             if "Lyrics" in song:
                 song["Lyrics"] = song["Lyrics"].lstrip()
+                song["Lyrics"] = re.sub(r"\n\s+", "\n", song["Lyrics"])
 
     # Save the modified JSON data back to a file
     with open("modified_" + json_file_path, "w") as file:
