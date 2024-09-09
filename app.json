@@ -7,11 +7,6 @@
     "icon": "./assets/images/icon.png",
     "scheme": "hymnhub",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.yourcompany.hymnhub",
@@ -34,12 +29,8 @@
       "output": "static",
       "bundler": "metro"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "plugins": [
-      "expo-router"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
     },

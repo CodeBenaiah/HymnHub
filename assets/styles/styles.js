@@ -1,33 +1,51 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get("window").width;
 
 const commonColors = {
-    background: "#222831",
-    cardBackground: "#31363F",
-    textPrimary: "#EEE",
-    textSecondary: "#DDD",
-    borderColor: "#31363F",
+    background: "#FFFFFF",
+    headerBackground: "#0D1B2A",
+    cardBackground: "#F5F5F5",
+    textPrimary: "#1B263B",
+    textSecondary: "#415A77",
+    borderColor: "#E0E0E0",
     linkColor: "#76ABAE",
-    activeIconColor: "#76ABAE",
+    activeIconColor: "#0D1B2A",
+    inactiveIconColor: "#808080",
+    navBackground: "#FAFAFA",
 };
 
 const commonFonts = {
-    titleFont: "BebasNeue",
-    headerFont: "Poppins",
-    bodyFont: "Poppins_Light",
+    boldFont: "Poppins_Bold",
+    semiBoldFont: "Poppins_SemiBold",
+    regularFont: "Poppins_Regular",
 };
 
 const commonStyles = {
     container: {
         flex: 1,
+        backgroundColor: "#F0F0F0",
+        padding: 20,
+    },
+    roundedBody: {
         backgroundColor: commonColors.background,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        padding: 20,
+        flex: 1,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3,
     },
     textPrimary: {
         color: commonColors.textPrimary,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
     },
     textSecondary: {
         color: commonColors.textSecondary,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
     },
     card: {
         backgroundColor: commonColors.cardBackground,
@@ -38,18 +56,120 @@ const commonStyles = {
 };
 
 const styles = StyleSheet.create({
-
-    // Container Styles
     safeContainer: {
-        ...commonStyles.container,
+        flex: 1,
+        backgroundColor: commonColors.background,
     },
     container: {
-        ...commonStyles.container,
+        flex: 1,
     },
     loadingContainer: {
-        ...commonStyles.container,
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
+    },
+    roundedTopContainer: {
+        ...commonStyles.roundedBody,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        padding: 20,
+        marginTop: -25,
+    },
+
+    carouselContainer: {
+        marginBottom: 20,
+    },
+    // Top Header styles
+    header: {
+        backgroundColor: commonColors.headerBackground,
+        padding: 25,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    title: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 32,
+        color: commonColors.background,
+    },
+    // Bottom Navigation styles
+    navigation: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        backgroundColor: commonColors.navBackground,
+        paddingVertical: 8,
+        borderTopColor: commonColors.borderColor,
+    },
+    iconContainer: {
+        alignItems: "center",
+        flex: 1,
+        justifyContent: "center",
+    },
+    icon: {
+        width: 24,
+        height: 24,
+        tintColor: commonColors.inactiveIconColor, // Grey color for inactive state
+    },
+    activeIcon: {
+        tintColor: commonColors.activeIconColor, // Active color
+    },
+    label: {
+        fontFamily: commonFonts.regularFont,
+        fontSize: 12,
+        color: commonColors.inactiveIconColor, // Grey color for inactive state
+        marginTop: 4,
+    },
+    activeLabel: {
+        color: commonColors.activeIconColor, // Active color
+    },
+
+    sectionContainer: {
+        marginBottom: 30,
+    },
+    sectionTitle: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 20,
+        marginBottom: -4,
+    },
+    sectionSubtitle: {
+        fontFamily: commonFonts.regularFont,
+        fontSize: 14,
+        color: commonColors.textSecondary,
+        marginBottom: 15,
+    },
+    homeCard: {
+        width: screenWidth * 0.4,
+        height: 120,
+        borderRadius: 15,
+        justifyContent: "flex-end",
+        alignItems: "flex-start",
+        padding: 10,
+        marginRight: 15,
+    },
+    homeCardTitle: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 16,
+        color: commonColors.textPrimary,
+    },
+
+    // Cards for content sections
+    cardContainer: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+    },
+    card: {
+        width: "48%",
+        height: 100,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        marginVertical: 10,
+        backgroundColor: commonColors.cardBackground,
+    },
+    cardTitle: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 16,
+        color: commonColors.textPrimary,
     },
 
     // Splash Screen Styles
@@ -60,170 +180,23 @@ const styles = StyleSheet.create({
         paddingTop: 250,
     },
     splash_title: {
-        fontSize: 52,
-        fontFamily: commonFonts.titleFont,
+        fontSize: 40,
+        fontFamily: commonFonts.boldFont,
         color: commonColors.textPrimary,
+        marginBottom: -15,
     },
     splash_subtitle: {
-        fontSize: 18,
-        fontFamily: commonFonts.bodyFont,
+        fontSize: 17,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textPrimary,
     },
 
-    // Layout Styles
-    header: {
-        alignItems: "flex-start",
-        paddingHorizontal: 20,
-        paddingTop: 20,
-        paddingBottom: 10,
-    },
-    title: {
-        fontSize: 45,
-        fontFamily: commonFonts.titleFont,
-        color: commonColors.textPrimary,
-    },
-    subtitle: {
-        fontSize: 12,
-        fontFamily: commonFonts.bodyFont,
-        color: commonColors.textPrimary,
-    },
-    navigation: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        paddingVertical: 15,
-        borderTopWidth: 1,
-        borderColor: commonColors.borderColor,
-        backgroundColor: commonColors.background,
-    },
-    iconContainer: {
-        alignItems: "center",
-    },
-    icon: {
-        width: 27,
-        height: 27,
-        tintColor: commonColors.textPrimary,
-    },
-    activeIcon: {
-        tintColor: commonColors.activeIconColor,
-    },
-    label: {
-        fontSize: 12,
-        marginTop: 5,
-        color: commonColors.textPrimary,
-        fontFamily: commonFonts.bodyFont,
-    },
-
-    // Tabs Styles
-    availableBooksText: {
-        fontSize: 24,
-        fontFamily: commonFonts.headerFont,
-        color: commonColors.textPrimary,
-        marginBottom: 10,
-        padding: 10,
-    },
-    books_container: {
-        ...commonStyles.container,
-        padding: 10,
-    },
-    card: {
-        ...commonStyles.card,
-    },
-    cardTitle: {
-        fontSize: 18,
-        ...commonStyles.textPrimary,
-    },
-    cardSubtitle: {
-        fontSize: 14,
-        ...commonStyles.textSecondary,
-    },
-    songTitle: {
-        fontSize: 20,
-        ...commonStyles.textPrimary,
-        marginBottom: 10,
-    },
-    songInfo: {
-        flexDirection: "column",
-    },
-    listTitle: {
-        fontSize: 16,
-        ...commonStyles.textPrimary,
-        marginBottom: 5,
-    },
-    songDetail: {
-        fontSize: 14,
-        ...commonStyles.textSecondary,
-    },
-
-    lyrics_songNumber: {
-        fontSize: 24,
-        ...commonStyles.textPrimary,
-    },
-    bookTitle: {
-        fontSize: 18,
-        ...commonStyles.textPrimary,
-        marginBottom: 10,
-    },
-    songNumber: {
-        fontSize: 16,
-        ...commonStyles.textPrimary,
-        marginBottom: 5,
-    },
-
-    // Coming Soon
-    comingSoonContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#182026", // Main background color
-    },
-    comingSoonText: {
-        fontSize: 32,
-        fontFamily: commonFonts.headerFont,
-        color: "#ffffff",
-        marginBottom: 10,
-    },
-    comingSoonSubText: {
-        fontSize: 18,
-        fontFamily: commonFonts.bodyFont,
-        color: "#aaa",
-    },
-
-    // SongDetails
-    detailsContainer: {
-        paddingHorizontal: 20,
-        paddingVertical: 10, // Add some vertical padding
-    },
-    lyrics_bookTitle: {
-        fontSize: 22,
-        color: commonColors.textPrimary,
-        marginBottom: 5,
-        fontFamily: commonFonts.headerFont,
-    },
-    lyrics_key: {
-        fontSize: 18,
-        color: commonColors.textSecondary,
-        marginBottom: 10,
-        fontFamily: commonFonts.bodyFont,
-    },
-    link: {
-        fontSize: 16,
-        color: commonColors.linkColor,
-        marginBottom: 15,
-        fontFamily: commonFonts.bodyFont,
-    },
-    lyrics: {
-        fontSize: 18,
-        color: commonColors.textPrimary,
-        marginTop: 10,
-        fontFamily: commonFonts.bodyFont,
-    },
-
-    // SearchTab
+    // Search Tab
     searchContainer: {
         flexDirection: "row",
         alignItems: "center",
-        margin: 20,
-        paddingHorizontal: 10,
+        margin: 10,
+        paddingBottom: 10,
     },
     searchInput: {
         flex: 1,
@@ -233,13 +206,14 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         paddingHorizontal: 15,
         fontSize: 18,
-        color: commonColors.textPrimary, // Text color inside input
-        fontFamily: commonFonts.bodyFont,
+        color: commonColors.textPrimary,
+        fontFamily: commonFonts.regularFont,
     },
     filterIcon: {
         width: 25,
         height: 25,
         marginLeft: 10,
+        tintColor: commonColors.activeIconColor,
     },
     hymnItem: {
         flexDirection: "row",
@@ -250,18 +224,18 @@ const styles = StyleSheet.create({
     },
     hymnNumber: {
         fontSize: 18,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textPrimary,
         width: 40,
     },
     hymnTitle: {
         fontSize: 18,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textPrimary,
     },
     bookName: {
         fontSize: 14,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textSecondary,
     },
 
@@ -279,18 +253,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: "flex-start",
     },
-    scrollView: {
-        width: "100%",
-    },
     modalTitle: {
         fontSize: 18,
-        fontFamily: commonFonts.headerFont,
+        fontFamily: commonFonts.semiBoldFont,
         color: commonColors.textPrimary,
     },
     filterCategory: {
         fontSize: 16,
         marginTop: 10,
-        fontFamily: commonFonts.headerFont,
+        fontFamily: commonFonts.semiBoldFont,
         color: commonColors.textPrimary,
     },
     switchContainer: {
@@ -299,7 +270,7 @@ const styles = StyleSheet.create({
     },
     switchLabel: {
         marginRight: 10,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textPrimary,
     },
     buttonContainer: {
@@ -309,6 +280,114 @@ const styles = StyleSheet.create({
         width: '100%',
     },
 
-});
+    // Books
+    booksHeader: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingTop: 10,
+        paddingBottom: 20,
+    },
+    bookTitle: {
+        fontSize: 24,
+        fontFamily: commonFonts.boldFont,
+    },
+    sortIcon: {
+        width: 24,
+        height: 24,
+        resizeMode: "contain",
+        tintColor: commonColors.activeIconColor,
+    },
+    books_container: {
+        flex: 1,
+    },
+    booksCard: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        paddingVertical: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: "#ddd",
+    },
+    songInfo: {
+        flexDirection: "row",
+        alignItems: "center",
+        width: '100%',
+    },
+    songNumberContainer: {
+        width: screenWidth * 0.15,
+        justifyContent: "center",
+        alignItems: "flex-start",
+    },
+    songNumber: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 16,
+        color: "#000",
+    },
+    titleContainer: {
+        flex: 1,
+        justifyContent: "center",
+    },
+    listTitle: {
+        fontFamily: commonFonts.regularFont,
+        fontSize: 16,
+        color: "#555",
+        flexShrink: 1,
+    },
 
+    // Unique scroll container for song numbers
+    songDetailsNumberScrollContainer: {
+        justifyContent: "flex-start",
+        alignItems: "center",
+        marginBottom: 10,
+    },
+    songDetailsNumberItem: {
+        padding: 10,
+        borderRadius: 50,
+        marginHorizontal: 8,
+    },
+    songDetailsNumberText: {
+        fontFamily: commonFonts.regularFont,
+        fontSize: 16,
+        color: commonColors.textPrimary,
+    },
+    songDetailsCurrentNumberText: {
+        fontFamily: commonFonts.boldFont,
+        color: commonColors.activeIconColor,
+    },
+
+    // Unique Title styles
+    songDetailsTitle: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 20,
+        color: "#333",
+        textAlign: "center",
+        marginVertical: 10,
+    },
+
+    // Unique Audio link styles
+    songDetailsAudioLinkContainer: {
+        marginVertical: 10,
+        alignItems: "center",
+    },
+    songDetailsAudioLinkText: {
+        fontFamily: commonFonts.regularFont,
+        fontSize: 16,
+        color: "#42A5F5",
+    },
+
+    // Unique Lyrics container
+    songDetailsLyricsContainer: {
+        flex: 1,
+        paddingHorizontal: 10,
+    },
+    songDetailsLyricsText: {
+        fontFamily: commonFonts.regularFont,
+        fontSize: 18,
+        lineHeight: 24,
+        color: "#333",
+    },
+
+    //settings page
+
+});
 export default styles;

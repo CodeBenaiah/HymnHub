@@ -7,118 +7,31 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { useFonts } from "expo-font";
-import SongDetails from "../SongDetails.jsx"; // Import SongDetails component
+import { useRouter } from "expo-router"; // Use expo-router for navigation
 import styles from "../../assets/styles/styles.js";
 
-// Import the JSON data
 const data = require("../../assets/data.json");
 
-export default function LanguageIndex() {
+export default function BooksScreen() {
+  const router = useRouter(); // Initialize router for navigation
   const [fontsLoaded] = useFonts({
-    Roboto: require("../../assets/fonts/Roboto-Regular.ttf"),
-    BebasNeue: require("../../assets/fonts/BebasNeue-Regular.ttf"),
+    Poppins_Regular: require("../../assets/fonts/Poppins-Regular.ttf"),
+    Poppins_Bold: require("../../assets/fonts/Poppins-Bold.ttf"),
+    Poppins_SemiBold: require("../../assets/fonts/Poppins-SemiBold.ttf"),
   });
 
-  const [view, setView] = useState("languages"); // 'languages', 'songs', or 'song'
-  const [selectedLanguage, setSelectedLanguage] = useState(null);
-  const [songsData, setSongsData] = useState([]);
-  const [allSongs, setAllSongs] = useState([]);
-  const [selectedSong, setSelectedSong] = useState(null);
-  const [songNumberKey, setSongNumberKey] = useState(null); // Key for song number
-  const [bookKey, setBookKey] = useState(null); // Key for song book
+  const [languages, setLanguages] = useState([]);
 
   useEffect(() => {
-    // Extract all songs from the data
-    const songs = Object.values(data).flat();
-    setAllSongs(songs);
+    // Extract unique languages from the data
+    const allSongs = [];
+    Object.values(data).forEach((songs) => {
+      allSongs.push(...songs);
+    });
 
-    // Dynamically set the key for song number and book from the first entry
-    if (songs.length > 0) {
-      const firstEntry = songs[0];
-      const keys = Object.keys(firstEntry);
-      setSongNumberKey(
-        keys.find(
-          (key) =>
-            ![
-              "Title",
-              "Link / Audio",
-              "Lyrics",
-              "Language",
-              "Song Book",
-            ].includes(key)
-        )
-      );
-      setBookKey("Song Book"); // Assuming 'Song Book' is the key for song book
-    }
+    const uniqueLanguages = [...new Set(allSongs.map((song) => song.Language))];
+    setLanguages(uniqueLanguages);
   }, []);
-
-  useEffect(() => {
-    if (selectedLanguage) {
-      const filteredSongs = allSongs
-        .filter((song) => song.Language === selectedLanguage)
-        .sort((a, b) => a.Title.localeCompare(b.Title));
-      setSongsData(filteredSongs);
-      setView("songs"); // Automatically switch to 'songs' view when a language is selected
-    }
-  }, [selectedLanguage]);
-
-  const handleLanguageSelect = (language) => {
-    setSelectedLanguage(language);
-  };
-
-  const handleSongSelect = (song) => {
-    setSelectedSong(song);
-    setView("song");
-  };
-
-  const renderLanguages = () => {
-    // Extract unique languages from all songs
-    const languages = [...new Set(allSongs.map((song) => song.Language))];
-
-    return (
-      <View style={styles.books_container}>
-        <Text style={styles.availableBooksText}>Languages</Text>
-        <FlatList
-          data={languages}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.card}
-              onPress={() => handleLanguageSelect(item)}
-            >
-              <Text style={styles.cardTitle}>{item}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item}
-        />
-      </View>
-    );
-  };
-
-  const renderSongs = () => (
-    <View style={styles.books_container}>
-      <FlatList
-        data={songsData}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleSongSelect(item)}
-          >
-            <View style={styles.songInfo}>
-              <Text style={styles.listTitle}>{item.Title}</Text>
-              {songNumberKey && (
-                <Text style={styles.songDetail}>
-                  {item[bookKey]} - {item[songNumberKey]}
-                </Text>
-              )}
-            </View>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) =>
-          `${item.Title}-${item[songNumberKey]}-${item[bookKey]}`
-        } // Updated keyExtractor
-      />
-    </View>
-  );
 
   if (!fontsLoaded) {
     return (
@@ -128,17 +41,29 @@ export default function LanguageIndex() {
     );
   }
 
-  return (
-    <View style={styles.safeContainer}>
-      {view === "languages" && renderLanguages()}
-      {view === "songs" && renderSongs()}
-      {view === "song" && selectedSong && songNumberKey && bookKey && (
-        <SongDetails
-          selectedSong={selectedSong}
-          selectedBook={selectedSong[bookKey]}
-          songNumberKey={songNumberKey}
-        />
-      )}
+  const handleLanguageSelect = (language) => {
+    // Navigate to the dynamic language page
+    router.push(`/language/${language}`);
+  };
+
+  const renderLanguages = () => (
+    <View style={styles.books_container}>
+      <Text style={styles.sectionTitle}>Languages</Text>
+      <Text style={styles.sectionSubtitle}>Available Song Books</Text>
+      <FlatList
+        data={languages}
+        renderItem={({ item: language, index }) => (
+          <TouchableOpacity
+            style={styles.booksCard}
+            onPress={() => handleLanguageSelect(language)}
+          >
+            <Text style={styles.listTitle}>{language}</Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item}
+      />
     </View>
   );
+
+  return <View style={styles.roundedTopContainer}>{renderLanguages()}</View>;
 }

@@ -67,29 +67,11 @@ const SongDetails = ({
   };
 
   return (
-    <View style={styles.roundedTopContainer}>
-      {/* Rounded container for song number scroll */}
-      <View style={styles.songDetailsRoundedTopContainer}>
-        {renderSongNumberScroll()}
-
-        {/* Display the Book Name and Song Number */}
-        <Text style={styles.songDetailsTitle}>
-          {selectedBook}: {selectedSong[songNumberKey]}
-        </Text>
-
-        {/* Display the Audio Link */}
-        {selectedSong["Link / Audio"] && (
-          <TouchableOpacity
-            onPress={() => Linking.openURL(selectedSong["Link / Audio"])}
-            style={styles.songDetailsAudioLinkContainer}
-          >
-            <Text style={styles.songDetailsAudioLinkText}>
-              🎵 Listen to Song
-            </Text>
-          </TouchableOpacity>
-        )}
-      </View>
-
+    <View style={styles.safeContainer}>
+      {/* Display the Book Name and Song Number */}
+      <Text style={styles.songDetailsTitle}>
+        {selectedBook}: {selectedSong[songNumberKey]}
+      </Text>
       {/* Display the Lyrics */}
       <ScrollView style={styles.songDetailsLyricsContainer}>
         <Text style={styles.songDetailsLyricsText}>{selectedSong.Lyrics}</Text>

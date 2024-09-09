@@ -10,7 +10,7 @@ export default function SplashScreen() {
   useEffect(() => {
     Animated.timing(fadeAnim, {
       toValue: 0,
-      duration: 1500, // Duration of fade-out effect
+      duration: 2000, // Duration of fade-out effect
       useNativeDriver: true,
     }).start(() => {
       router.replace("/home"); // Navigate to home screen after fade-out

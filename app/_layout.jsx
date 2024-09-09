@@ -1,28 +1,32 @@
 import React from "react";
-import { View, Image, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  StatusBar,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Slot, Link, usePathname, useRouter } from "expo-router"; // Import useRouter
+import { Slot, Link, usePathname } from "expo-router"; // Import useRouter if needed
 import { useFonts } from "expo-font";
-import { ActivityIndicator } from "react-native";
 import styles from "../assets/styles/styles.js";
 
 // Import your custom icons
-const languageIcon = require("../assets/images/language.png");
+const homeIcon = require("../assets/images/home.png");
 const searchIcon = require("../assets/images/search.png");
-const authorIcon = require("../assets/images/author.png");
-const bookmarkIcon = require("../assets/images/bookmark.png");
-const booksIcon = require("../assets/images/books.png");
+const settingsIcon = require("../assets/images/settings.png");
+const booksIcon = require("../assets/images/books.png"); // New icon
+const languagesIcon = require("../assets/images/language.png"); // New icon
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
-    BebasNeue: require("../assets/fonts/BebasNeue-Regular.ttf"),
-    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
+    Poppins_Regular: require("../assets/fonts/Poppins-Regular.ttf"),
     Poppins_Bold: require("../assets/fonts/Poppins-Bold.ttf"),
-    Poppins_Light: require("../assets/fonts/Poppins-Light.ttf"),
+    Poppins_SemiBold: require("../assets/fonts/Poppins-SemiBold.ttf"),
   });
 
-  const pathname = usePathname();
-  const router = useRouter();
+  const pathname = usePathname(); // To get the current path
 
   // If fonts are not loaded, display a loading indicator
   if (!fontsLoaded) {
@@ -33,77 +37,129 @@ export default function Layout() {
     );
   }
 
+  // Conditionally render the header and bottom navigation based on route
+  const shouldShowHeader = pathname !== "/splash";
+  const shouldShowNavigation = pathname !== "/splash";
+
   return (
     <SafeAreaView style={styles.safeContainer}>
+      <StatusBar
+        barStyle="light-content" // Change to "dark-content" if you have a light background
+        backgroundColor={
+          shouldShowHeader ? styles.header.backgroundColor : "transparent"
+        } // Ensure the status bar background color matches the header or app's theme
+      />
       <View style={styles.container}>
-        {pathname !== "/splash" && ( // Conditionally render header
+        {/* Header */}
+        {shouldShowHeader && (
           <View style={styles.header}>
             <Text style={styles.title}>HymnHub</Text>
           </View>
         )}
 
+        {/* Main content slot */}
         <Slot />
 
-        {pathname !== "/splash" && ( // Conditionally render navigation bar
+        {/* Bottom navigation */}
+        {shouldShowNavigation && (
           <View style={styles.navigation}>
+            <Link href="/home" asChild>
+              <TouchableOpacity style={styles.iconContainer}>
+                <Image
+                  source={homeIcon}
+                  style={[
+                    styles.icon,
+                    pathname === "/home" && styles.activeIcon, // Highlight active icon
+                  ]}
+                />
+                <Text
+                  style={[
+                    styles.label,
+                    pathname === "/home" && styles.activeLabel, // Highlight active label
+                  ]}
+                >
+                  Home
+                </Text>
+              </TouchableOpacity>
+            </Link>
+
             <Link href="/books" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image
                   source={booksIcon}
                   style={[
                     styles.icon,
-                    pathname === "/books" && styles.activeIcon,
+                    pathname === "/books" && styles.activeIcon, // Highlight active icon
                   ]}
                 />
-                <Text style={styles.label}>Books</Text>
-              </TouchableOpacity>
-            </Link>
-            <Link href="/language" asChild>
-              <TouchableOpacity style={styles.iconContainer}>
-                <Image
-                  source={languageIcon}
+                <Text
                   style={[
-                    styles.icon,
-                    pathname === "/language" && styles.activeIcon,
+                    styles.label,
+                    pathname === "/books" && styles.activeLabel, // Highlight active label
                   ]}
-                />
-                <Text style={styles.label}>Language</Text>
+                >
+                  Books
+                </Text>
               </TouchableOpacity>
             </Link>
+
             <Link href="/search" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image
                   source={searchIcon}
                   style={[
                     styles.icon,
-                    pathname === "/search" && styles.activeIcon,
+                    pathname === "/search" && styles.activeIcon, // Highlight active icon
                   ]}
                 />
-                <Text style={styles.label}>Search</Text>
+                <Text
+                  style={[
+                    styles.label,
+                    pathname === "/search" && styles.activeLabel, // Highlight active label
+                  ]}
+                >
+                  Search
+                </Text>
               </TouchableOpacity>
             </Link>
-            <Link href="/authors" asChild>
+
+            <Link href="/language" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image
-                  source={authorIcon}
+                  source={languagesIcon}
                   style={[
                     styles.icon,
-                    pathname === "/authors" && styles.activeIcon,
+                    pathname === "/language" && styles.activeIcon, // Highlight active icon
                   ]}
                 />
-                <Text style={styles.label}>Authors</Text>
+                <Text
+                  style={[
+                    styles.label,
+                    pathname === "/language" && styles.activeLabel, // Highlight active label
+                  ]}
+                >
+                  Languages
+                </Text>
               </TouchableOpacity>
             </Link>
-            <Link href="/bookmarked" asChild>
+
+            <Link href="/settings" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image
-                  source={bookmarkIcon}
+                  source={settingsIcon}
                   style={[
                     styles.icon,
-                    pathname === "/bookmarked" && styles.activeIcon,
+                    pathname === "/settings" && styles.activeIcon, // Highlight active icon
                   ]}
                 />
-                <Text style={styles.label}>Bookmark</Text>
+                <Text
+                  style={[
+                    styles.label,
+                    pathname === "/settings" && styles.activeLabel, // Highlight active label
+                  ]}
+                >
+                  Settings
+                </Text>
               </TouchableOpacity>
             </Link>
           </View>

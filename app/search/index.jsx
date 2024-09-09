@@ -4,7 +4,6 @@ import {
   TextInput,
   FlatList,
   Text,
-  StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
   Image,
@@ -14,7 +13,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useFonts } from "expo-font";
-import SongDetails from "../SongDetails.jsx"; // Import the SongDetails component
+import SongDetails from "../searchsong.jsx"; // Import the SongDetails component
 import data from "../../assets/data.json"; // Import the JSON data
 import styles from "../../assets/styles/styles.js";
 
@@ -26,14 +25,17 @@ export default function SearchScreen() {
   const [selectedLanguages, setSelectedLanguages] = useState([]); // State to store selected languages for filtering
 
   const [fontsLoaded] = useFonts({
-    BebasNeue: require("../../assets/fonts/BebasNeue-Regular.ttf"),
-    Poppins: require("../../assets/fonts/Poppins-Regular.ttf"),
+    Poppins_Regular: require("../../assets/fonts/Poppins-Regular.ttf"),
     Poppins_Bold: require("../../assets/fonts/Poppins-Bold.ttf"),
-    Poppins_Light: require("../../assets/fonts/Poppins-Light.ttf"),
+    Poppins_SemiBold: require("../../assets/fonts/Poppins-SemiBold.ttf"),
   });
 
   if (!fontsLoaded) {
-    return <ActivityIndicator size="large" color="#ffffff" />; // Show a loading indicator while fonts are loading
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    ); // Show a loading indicator while fonts are loading
   }
 
   // Get unique books and languages from data
@@ -50,9 +52,10 @@ export default function SearchScreen() {
   // Filter the hymns based on the search query and selected filters
   const filteredHymns = Object.keys(data)
     .flatMap((bookName) =>
-      data[bookName].map((hymn) => ({
+      data[bookName].map((hymn, index) => ({
         ...hymn,
         bookName,
+        id: `${bookName}-${index}`, // Create a unique ID for each hymn
       }))
     )
     .filter((hymn) => {
@@ -72,7 +75,17 @@ export default function SearchScreen() {
     });
 
   const handleSongSelect = (song) => {
-    setSelectedSong(song); // Set the selected song
+    const songIndex = filteredHymns.findIndex((hymn) => hymn.id === song.id);
+
+    setSelectedSong({
+      ...song,
+      songNumberKey: Object.keys(song).find(
+        (key) => !["Title", "Link / Audio", "Lyrics", "bookName"].includes(key)
+      ),
+      songsData: data, // Pass the full data
+      currentSongIndex: songIndex,
+      onSongSelect: handleSongSelect, // Pass the function to handle song selection
+    });
   };
 
   const handleBookSelection = (book) => {
@@ -144,7 +157,7 @@ export default function SearchScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.roundedTopContainer}>
       {!selectedSong && (
         <View style={styles.searchContainer}>
           <TextInput
@@ -167,20 +180,23 @@ export default function SearchScreen() {
         <SongDetails
           selectedSong={selectedSong}
           selectedBook={selectedSong.bookName}
-          songNumberKey={Object.keys(selectedSong).find(
-            (key) =>
-              !["Title", "Link / Audio", "Lyrics", "bookName"].includes(key)
-          )}
+          songNumberKey={selectedSong.songNumberKey}
+          songsData={selectedSong.songsData}
+          currentSongIndex={selectedSong.currentSongIndex}
+          onSongSelect={selectedSong.onSongSelect}
         />
       ) : (
         <FlatList
           data={filteredHymns}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item.id} // Use the unique ID for key extraction
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleSongSelect(item)}>
-              <View style={styles.hymnItem}>
-                <View>
-                  <Text style={styles.hymnTitle}>{item.Title}</Text>
+            <TouchableOpacity
+              style={styles.booksCard} // Apply booksCard style
+              onPress={() => handleSongSelect(item)}
+            >
+              <View style={styles.songInfo}>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.listTitle}>{item.Title}</Text>
                   <Text style={styles.bookName}>{item.bookName}</Text>
                 </View>
               </View>
