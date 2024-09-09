@@ -7,22 +7,19 @@ import { ActivityIndicator } from "react-native";
 import styles from "../assets/styles/styles.js";
 
 // Import your custom icons
-const languageIcon = require("../assets/images/language.png");
+const homeIcon = require("../assets/images/home.png");
 const searchIcon = require("../assets/images/search.png");
-const authorIcon = require("../assets/images/author.png");
-const bookmarkIcon = require("../assets/images/bookmark.png");
-const booksIcon = require("../assets/images/books.png");
+const settingsIcon = require("../assets/images/settings.png");
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
-    BebasNeue: require("../assets/fonts/BebasNeue-Regular.ttf"),
-    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
+    Poppins_Regular: require("../assets/fonts/Poppins-Regular.ttf"),
     Poppins_Bold: require("../assets/fonts/Poppins-Bold.ttf"),
-    Poppins_Light: require("../assets/fonts/Poppins-Light.ttf"),
+    Poppins_SemiBold: require("../assets/fonts/Poppins-SemiBold.ttf"),
   });
 
-  const pathname = usePathname();
-  const router = useRouter();
+  const pathname = usePathname(); // To get the current path
+  const router = useRouter(); // Use router if needed for programmatic navigation
 
   // If fonts are not loaded, display a loading indicator
   if (!fontsLoaded) {
@@ -33,77 +30,85 @@ export default function Layout() {
     );
   }
 
+  // Conditionally render the header based on route
+  const shouldShowHeader = pathname !== "/splash";
+
+  // Conditionally render the bottom navigation based on route
+  const shouldShowNavigation = pathname !== "/splash";
+
   return (
     <SafeAreaView style={styles.safeContainer}>
       <View style={styles.container}>
-        {pathname !== "/splash" && ( // Conditionally render header
+        {/* Header */}
+        {shouldShowHeader && (
           <View style={styles.header}>
             <Text style={styles.title}>HymnHub</Text>
           </View>
         )}
 
+        {/* Main content slot */}
         <Slot />
 
-        {pathname !== "/splash" && ( // Conditionally render navigation bar
+        {/* Bottom navigation */}
+        {shouldShowNavigation && (
           <View style={styles.navigation}>
-            <Link href="/books" asChild>
+            <Link href="/home" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image
-                  source={booksIcon}
+                  source={homeIcon}
                   style={[
                     styles.icon,
-                    pathname === "/books" && styles.activeIcon,
+                    pathname === "/home" && styles.activeIcon, // Highlight active icon
                   ]}
                 />
-                <Text style={styles.label}>Books</Text>
-              </TouchableOpacity>
-            </Link>
-            <Link href="/language" asChild>
-              <TouchableOpacity style={styles.iconContainer}>
-                <Image
-                  source={languageIcon}
+                <Text
                   style={[
-                    styles.icon,
-                    pathname === "/language" && styles.activeIcon,
+                    styles.label,
+                    pathname === "/home" && styles.activeLabel, // Highlight active label
                   ]}
-                />
-                <Text style={styles.label}>Language</Text>
+                >
+                  Home
+                </Text>
               </TouchableOpacity>
             </Link>
+
             <Link href="/search" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image
                   source={searchIcon}
                   style={[
                     styles.icon,
-                    pathname === "/search" && styles.activeIcon,
+                    pathname === "/search" && styles.activeIcon, // Highlight active icon
                   ]}
                 />
-                <Text style={styles.label}>Search</Text>
+                <Text
+                  style={[
+                    styles.label,
+                    pathname === "/search" && styles.activeLabel, // Highlight active label
+                  ]}
+                >
+                  Search
+                </Text>
               </TouchableOpacity>
             </Link>
-            <Link href="/authors" asChild>
+
+            <Link href="/settings" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image
-                  source={authorIcon}
+                  source={settingsIcon}
                   style={[
                     styles.icon,
-                    pathname === "/authors" && styles.activeIcon,
+                    pathname === "/settings" && styles.activeIcon, // Highlight active icon
                   ]}
                 />
-                <Text style={styles.label}>Authors</Text>
-              </TouchableOpacity>
-            </Link>
-            <Link href="/bookmarked" asChild>
-              <TouchableOpacity style={styles.iconContainer}>
-                <Image
-                  source={bookmarkIcon}
+                <Text
                   style={[
-                    styles.icon,
-                    pathname === "/bookmarked" && styles.activeIcon,
+                    styles.label,
+                    pathname === "/settings" && styles.activeLabel, // Highlight active label
                   ]}
-                />
-                <Text style={styles.label}>Bookmark</Text>
+                >
+                  Settings
+                </Text>
               </TouchableOpacity>
             </Link>
           </View>

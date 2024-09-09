@@ -1,33 +1,50 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
+
+const screenWidth = Dimensions.get("window").width;
 
 const commonColors = {
-    background: "#222831",
-    cardBackground: "#31363F",
-    textPrimary: "#EEE",
-    textSecondary: "#DDD",
-    borderColor: "#31363F",
-    linkColor: "#76ABAE",
-    activeIconColor: "#76ABAE",
+    background: "#FFFFFF", // White background for the body
+    headerBackground: "#0D1B2A", // Dark background for the header
+    cardBackground: "#F5F5F5", // Light card background
+    textPrimary: "#1B263B", // Black text for primary content
+    textSecondary: "#415A77", // Secondary text color
+    borderColor: "#E0E0E0", // Border color for elements
+    linkColor: "#76ABAE", // Active link color
+    activeIconColor: "#0D1B2A", // Active icon color
+    inactiveIconColor: "#808080", // Grey color for inactive state
+    navBackground: "#FAFAFA", // Light background for the navigation bar
 };
 
 const commonFonts = {
-    titleFont: "BebasNeue",
-    headerFont: "Poppins",
-    bodyFont: "Poppins_Light",
+    boldFont: "Poppins_Bold",
+    semiBoldFont: "Poppins_SemiBold",
+    regularFont: "Poppins_Regular",
 };
 
 const commonStyles = {
     container: {
         flex: 1,
+        backgroundColor: "#F0F0F0", // This is for the outer background around the rounded body
+        padding: 20, // Padding around the body
+    },
+    roundedBody: {
         backgroundColor: commonColors.background,
+        borderRadius: 20, // To give the body a rounded rectangle shape
+        padding: 20, // Padding inside the rounded body
+        flex: 1,
+        shadowColor: "#000", // Shadow for visual depth
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 3, // Elevation for Android
     },
     textPrimary: {
         color: commonColors.textPrimary,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
     },
     textSecondary: {
         color: commonColors.textSecondary,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
     },
     card: {
         backgroundColor: commonColors.cardBackground,
@@ -38,18 +55,126 @@ const commonStyles = {
 };
 
 const styles = StyleSheet.create({
-
-    // Container Styles
     safeContainer: {
-        ...commonStyles.container,
+        flex: 1,
+        backgroundColor: commonColors.background,
     },
     container: {
-        ...commonStyles.container,
+        flex: 1,
     },
     loadingContainer: {
-        ...commonStyles.container,
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
+    },
+    roundedTopContainer: {
+        flex: 1,
+        backgroundColor: commonColors.background,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        padding: 20,
+    },
+
+    carouselContainer: {
+        marginBottom: 20,
+    },
+    // Top Header styles
+    header: {
+        backgroundColor: commonColors.headerBackground,
+        padding: 30,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    title: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 32,
+        color: commonColors.background, // White color for the HymnHub text
+    },
+    // Bottom Navigation styles
+    navigation: {
+        flexDirection: "row",
+        justifyContent: "space-around",
+        backgroundColor: "#fff",
+        paddingVertical: 8,
+        borderColor: commonColors.borderColor,
+    },
+    iconContainer: {
+        alignItems: "center",
+    },
+    icon: {
+        width: 24,
+        height: 24,
+        tintColor: commonColors.inactiveIconColor, // Grey color for inactive state
+    },
+    activeIcon: {
+        tintColor: commonColors.activeIconColor, // Active color
+    },
+    label: {
+        fontFamily: commonFonts.regularFont,
+        fontSize: 12,
+        color: commonColors.inactiveIconColor, // Grey color for inactive state
+        marginTop: 4,
+    },
+    activeLabel: {
+        color: commonColors.activeIconColor, // Active color
+    },
+
+    roundedTopContainer: {
+        flex: 1,
+        backgroundColor: commonColors.background,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        padding: 20,
+        marginTop: -25,
+    },
+    sectionContainer: {
+        marginBottom: 30,
+    },
+    sectionTitle: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 20,
+        marginBottom: -4,
+    },
+    sectionSubtitle: {
+        fontFamily: commonFonts.regularFont,
+        fontSize: 14,
+        color: commonColors.textSecondary,
+        marginBottom: 15,
+    },
+    homeCard: {
+        width: screenWidth * 0.4,
+        height: 120,
+        borderRadius: 15,
+        justifyContent: "flex-end", // Ensure the text is placed at the bottom
+        alignItems: "flex-start",  // Align the text to the left
+        padding: 10, // Padding inside the card
+        marginRight: 15,
+    },
+    homeCardTitle: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 16,
+        color: commonColors.textPrimary,
+    },
+
+    // Cards for content sections
+    cardContainer: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+    },
+    card: {
+        width: "48%",
+        height: 100,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignItems: "center",
+        marginVertical: 10,
+        backgroundColor: commonColors.cardBackground,
+    },
+    cardTitle: {
+        fontFamily: commonFonts.boldFont,
+        fontSize: 16,
+        color: commonColors.textPrimary,
     },
 
     // Splash Screen Styles
@@ -60,113 +185,15 @@ const styles = StyleSheet.create({
         paddingTop: 250,
     },
     splash_title: {
-        fontSize: 52,
-        fontFamily: commonFonts.titleFont,
+        fontSize: 40,
+        fontFamily: commonFonts.boldFont,
         color: commonColors.textPrimary,
+        marginBottom: -15,
     },
     splash_subtitle: {
-        fontSize: 18,
-        fontFamily: commonFonts.bodyFont,
+        fontSize: 17,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textPrimary,
-    },
-
-    // Layout Styles
-    header: {
-        alignItems: "flex-start",
-        paddingHorizontal: 20,
-        paddingTop: 20,
-        paddingBottom: 10,
-    },
-    title: {
-        fontSize: 45,
-        fontFamily: commonFonts.titleFont,
-        color: commonColors.textPrimary,
-    },
-    subtitle: {
-        fontSize: 12,
-        fontFamily: commonFonts.bodyFont,
-        color: commonColors.textPrimary,
-    },
-    navigation: {
-        flexDirection: "row",
-        justifyContent: "space-around",
-        paddingVertical: 15,
-        borderTopWidth: 1,
-        borderColor: commonColors.borderColor,
-        backgroundColor: commonColors.background,
-    },
-    iconContainer: {
-        alignItems: "center",
-    },
-    icon: {
-        width: 27,
-        height: 27,
-        tintColor: commonColors.textPrimary,
-    },
-    activeIcon: {
-        tintColor: commonColors.activeIconColor,
-    },
-    label: {
-        fontSize: 12,
-        marginTop: 5,
-        color: commonColors.textPrimary,
-        fontFamily: commonFonts.bodyFont,
-    },
-
-    // Tabs Styles
-    availableBooksText: {
-        fontSize: 24,
-        fontFamily: commonFonts.headerFont,
-        color: commonColors.textPrimary,
-        marginBottom: 10,
-        padding: 10,
-    },
-    books_container: {
-        ...commonStyles.container,
-        padding: 10,
-    },
-    card: {
-        ...commonStyles.card,
-    },
-    cardTitle: {
-        fontSize: 18,
-        ...commonStyles.textPrimary,
-    },
-    cardSubtitle: {
-        fontSize: 14,
-        ...commonStyles.textSecondary,
-    },
-    songTitle: {
-        fontSize: 20,
-        ...commonStyles.textPrimary,
-        marginBottom: 10,
-    },
-    songInfo: {
-        flexDirection: "column",
-    },
-    listTitle: {
-        fontSize: 16,
-        ...commonStyles.textPrimary,
-        marginBottom: 5,
-    },
-    songDetail: {
-        fontSize: 14,
-        ...commonStyles.textSecondary,
-    },
-
-    lyrics_songNumber: {
-        fontSize: 24,
-        ...commonStyles.textPrimary,
-    },
-    bookTitle: {
-        fontSize: 18,
-        ...commonStyles.textPrimary,
-        marginBottom: 10,
-    },
-    songNumber: {
-        fontSize: 16,
-        ...commonStyles.textPrimary,
-        marginBottom: 5,
     },
 
     // Coming Soon
@@ -174,51 +201,21 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#182026", // Main background color
+        backgroundColor: "#182026", // Dark background for Coming Soon
     },
     comingSoonText: {
         fontSize: 32,
-        fontFamily: commonFonts.headerFont,
-        color: "#ffffff",
+        fontFamily: commonFonts.semiBoldFont,
+        color: "#FFFFFF",
         marginBottom: 10,
     },
     comingSoonSubText: {
         fontSize: 18,
-        fontFamily: commonFonts.bodyFont,
-        color: "#aaa",
+        fontFamily: commonFonts.regularFont,
+        color: "#9A8C98", // Secondary text color for Coming Soon
     },
 
-    // SongDetails
-    detailsContainer: {
-        paddingHorizontal: 20,
-        paddingVertical: 10, // Add some vertical padding
-    },
-    lyrics_bookTitle: {
-        fontSize: 22,
-        color: commonColors.textPrimary,
-        marginBottom: 5,
-        fontFamily: commonFonts.headerFont,
-    },
-    lyrics_key: {
-        fontSize: 18,
-        color: commonColors.textSecondary,
-        marginBottom: 10,
-        fontFamily: commonFonts.bodyFont,
-    },
-    link: {
-        fontSize: 16,
-        color: commonColors.linkColor,
-        marginBottom: 15,
-        fontFamily: commonFonts.bodyFont,
-    },
-    lyrics: {
-        fontSize: 18,
-        color: commonColors.textPrimary,
-        marginTop: 10,
-        fontFamily: commonFonts.bodyFont,
-    },
-
-    // SearchTab
+    // Search Tab
     searchContainer: {
         flexDirection: "row",
         alignItems: "center",
@@ -234,7 +231,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
         fontSize: 18,
         color: commonColors.textPrimary, // Text color inside input
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
     },
     filterIcon: {
         width: 25,
@@ -250,18 +247,18 @@ const styles = StyleSheet.create({
     },
     hymnNumber: {
         fontSize: 18,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textPrimary,
         width: 40,
     },
     hymnTitle: {
         fontSize: 18,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textPrimary,
     },
     bookName: {
         fontSize: 14,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textSecondary,
     },
 
@@ -279,18 +276,15 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         alignItems: "flex-start",
     },
-    scrollView: {
-        width: "100%",
-    },
     modalTitle: {
         fontSize: 18,
-        fontFamily: commonFonts.headerFont,
+        fontFamily: commonFonts.semiBoldFont,
         color: commonColors.textPrimary,
     },
     filterCategory: {
         fontSize: 16,
         marginTop: 10,
-        fontFamily: commonFonts.headerFont,
+        fontFamily: commonFonts.semiBoldFont,
         color: commonColors.textPrimary,
     },
     switchContainer: {
@@ -299,7 +293,7 @@ const styles = StyleSheet.create({
     },
     switchLabel: {
         marginRight: 10,
-        fontFamily: commonFonts.bodyFont,
+        fontFamily: commonFonts.regularFont,
         color: commonColors.textPrimary,
     },
     buttonContainer: {
@@ -308,7 +302,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         width: '100%',
     },
-
 });
 
 export default styles;

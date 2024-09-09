@@ -34,12 +34,8 @@
       "output": "static",
       "bundler": "metro"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "plugins": [
-      "expo-router"
-    ],
+    "assetBundlePatterns": ["**/*"],
+    "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
     },

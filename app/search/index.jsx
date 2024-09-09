@@ -26,10 +26,9 @@ export default function SearchScreen() {
   const [selectedLanguages, setSelectedLanguages] = useState([]); // State to store selected languages for filtering
 
   const [fontsLoaded] = useFonts({
-    BebasNeue: require("../../assets/fonts/BebasNeue-Regular.ttf"),
-    Poppins: require("../../assets/fonts/Poppins-Regular.ttf"),
+    Poppins_Regular: require("../../assets/fonts/Poppins-Regular.ttf"),
     Poppins_Bold: require("../../assets/fonts/Poppins-Bold.ttf"),
-    Poppins_Light: require("../../assets/fonts/Poppins-Light.ttf"),
+    Poppins_SemiBold: require("../../assets/fonts/Poppins-SemiBold.ttf"),
   });
 
   if (!fontsLoaded) {

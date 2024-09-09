@@ -4,75 +4,72 @@ import {
   Text,
   FlatList,
   TouchableOpacity,
-  ActivityIndicator,
+  ScrollView,
 } from "react-native";
 import { useFonts } from "expo-font";
-import SongDetails from "./SongDetails.jsx"; // Import the common SongDetails component
+import { useRouter } from "expo-router"; // Use the expo-router
 import styles from "../assets/styles/styles.js";
 
-// Import the JSON data
 const data = require("../assets/data.json");
 
 export default function HomeScreen() {
-  const [fontsLoaded] = useFonts({
-    BebasNeue: require("../assets/fonts/BebasNeue-Regular.ttf"),
-    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
-    Poppins_Bold: require("../assets/fonts/Poppins-Bold.ttf"),
-    Poppins_Light: require("../assets/fonts/Poppins-Light.ttf"),
-  });
+  const router = useRouter(); // Initialize router for navigation
 
-  const [view, setView] = useState("books"); // 'books', 'songs', or 'song'
+  const [view, setView] = useState("books");
   const [selectedBook, setSelectedBook] = useState(null);
-  const [selectedSong, setSelectedSong] = useState(null);
   const [songsData, setSongsData] = useState([]);
-  const [songNumberKey, setSongNumberKey] = useState(null); // Dynamic key for song number
+  const [allSongs, setAllSongs] = useState([]);
 
   useEffect(() => {
-    if (selectedBook && data[selectedBook]) {
-      setSongsData(data[selectedBook]);
-      // Dynamically set the key for song number from the first entry of the selected book
-      if (data[selectedBook].length > 0) {
-        const firstEntry = data[selectedBook][0];
-        const keys = Object.keys(firstEntry);
-        setSongNumberKey(
-          keys.find((key) => !["Title", "Link / Audio", "Lyrics"].includes(key))
-        );
-      }
-      setView("songs"); // Automatically switch to 'songs' view when a book is selected
-    }
-  }, [selectedBook]);
+    // Combine all songs for language filtering
+    let combinedSongs = [];
+    Object.values(data).forEach((songs) => {
+      combinedSongs = [...combinedSongs, ...songs];
+    });
+    setAllSongs(combinedSongs);
+  }, []);
 
-  if (!fontsLoaded) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#ffffff" />
-      </View>
-    );
-  }
-
-  const handleBookSelect = (bookName) => {
-    setSelectedBook(bookName);
-    setSelectedSong(null); // Clear selected song when switching books
-  };
-
-  const handleSongSelect = (song) => {
-    setSelectedSong(song);
-    setView("song");
-  };
+  // Define 20 pastel colors for the cards
+  const pastelColors = [
+    "#FFEBEE",
+    "#E3F2FD",
+    "#FFF3E0",
+    "#E8F5E9",
+    "#FFFDE7",
+    "#F3E5F5",
+    "#E1F5FE",
+    "#FCE4EC",
+    "#FFF8E1",
+    "#ECEFF1",
+    "#F5F5F5",
+    "#FFCDD2",
+    "#C8E6C9",
+    "#FFCCBC",
+    "#BBDEFB",
+    "#DCEDC8",
+    "#FFECB3",
+    "#CFD8DC",
+    "#FFCC80",
+    "#B3E5FC",
+  ];
 
   const renderBooks = () => (
-    <View style={styles.books_container}>
-      {/* Add the "Available Books" text */}
-      <Text style={styles.availableBooksText}>Books</Text>
-
+    <View style={styles.sectionContainer}>
+      <Text style={styles.sectionTitle}>Books</Text>
+      <Text style={styles.sectionSubtitle}>Available Song Books</Text>
       <FlatList
+        horizontal
+        showsHorizontalScrollIndicator={false}
         data={Object.keys(data)}
-        renderItem={({ item }) => (
+        renderItem={({ item: book, index }) => (
           <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleBookSelect(item)}
+            style={[
+              styles.homeCard,
+              { backgroundColor: pastelColors[index % pastelColors.length] },
+            ]}
+            onPress={() => router.push(`/books/${book}`)} // Navigate to dynamic book page
           >
-            <Text style={styles.cardTitle}>{item}</Text>
+            <Text style={styles.homeCardTitle}>{book}</Text>
           </TouchableOpacity>
         )}
         keyExtractor={(item) => item}
@@ -80,41 +77,71 @@ export default function HomeScreen() {
     </View>
   );
 
-  const renderSongs = () => (
-    <View style={styles.books_container}>
-      <FlatList
-        data={songsData}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.card}
-            onPress={() => handleSongSelect(item)}
-          >
-            <View style={styles.songInfo}>
-              {songNumberKey && (
-                <Text style={styles.songNumber}>
-                  Song No: {item[songNumberKey]}
-                </Text>
-              )}
-              <Text style={styles.listTitle}>{item.Title}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item[songNumberKey]?.toString() || item.Title}
-      />
-    </View>
-  );
+  const renderLanguages = () => {
+    const languages = [...new Set(allSongs.map((song) => song.Language))];
+
+    return (
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>Languages</Text>
+        <Text style={styles.sectionSubtitle}>Available Song Books</Text>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={languages}
+          renderItem={({ item: language, index }) => (
+            <TouchableOpacity
+              style={[
+                styles.homeCard,
+                {
+                  backgroundColor:
+                    pastelColors[(index + 3) % pastelColors.length],
+                },
+              ]}
+              onPress={() => router.push(`/language/${language}`)} // Navigate to dynamic language page
+            >
+              <Text style={styles.homeCardTitle}>{language}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item}
+        />
+      </View>
+    );
+  };
+
+  const renderAuthors = () => {
+    return (
+      <View style={styles.sectionContainer}>
+        <Text style={styles.sectionTitle}>Authors</Text>
+        <Text style={styles.sectionSubtitle}>Available Song Authors</Text>
+        <FlatList
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          data={["Coming Soon"]}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              style={[
+                styles.homeCard,
+                { backgroundColor: pastelColors[index % pastelColors.length] },
+              ]}
+            >
+              <Text style={styles.homeCardTitle}>{item}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item}
+        />
+      </View>
+    );
+  };
 
   return (
     <View style={styles.safeContainer}>
-      {view === "books" && renderBooks()}
-      {view === "songs" && renderSongs()}
-      {view === "song" && selectedSong && songNumberKey && (
-        <SongDetails
-          selectedSong={selectedSong}
-          selectedBook={selectedBook}
-          songNumberKey={songNumberKey}
-        />
-      )}
+      <View style={styles.roundedTopContainer}>
+        <ScrollView>
+          {renderBooks()}
+          {renderLanguages()}
+          {renderAuthors()}
+        </ScrollView>
+      </View>
     </View>
   );
 }
