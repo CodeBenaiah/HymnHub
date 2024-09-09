@@ -1,15 +1,23 @@
 import React from "react";
-import { View, Image, TouchableOpacity, Text } from "react-native";
+import {
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  StatusBar,
+  ActivityIndicator,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Slot, Link, usePathname, useRouter } from "expo-router"; // Import useRouter
+import { Slot, Link, usePathname } from "expo-router"; // Import useRouter if needed
 import { useFonts } from "expo-font";
-import { ActivityIndicator } from "react-native";
 import styles from "../assets/styles/styles.js";
 
 // Import your custom icons
 const homeIcon = require("../assets/images/home.png");
 const searchIcon = require("../assets/images/search.png");
 const settingsIcon = require("../assets/images/settings.png");
+const booksIcon = require("../assets/images/books.png"); // New icon
+const languagesIcon = require("../assets/images/language.png"); // New icon
 
 export default function Layout() {
   const [fontsLoaded] = useFonts({
@@ -19,7 +27,6 @@ export default function Layout() {
   });
 
   const pathname = usePathname(); // To get the current path
-  const router = useRouter(); // Use router if needed for programmatic navigation
 
   // If fonts are not loaded, display a loading indicator
   if (!fontsLoaded) {
@@ -30,14 +37,18 @@ export default function Layout() {
     );
   }
 
-  // Conditionally render the header based on route
+  // Conditionally render the header and bottom navigation based on route
   const shouldShowHeader = pathname !== "/splash";
-
-  // Conditionally render the bottom navigation based on route
   const shouldShowNavigation = pathname !== "/splash";
 
   return (
     <SafeAreaView style={styles.safeContainer}>
+      <StatusBar
+        barStyle="light-content" // Change to "dark-content" if you have a light background
+        backgroundColor={
+          shouldShowHeader ? styles.header.backgroundColor : "transparent"
+        } // Ensure the status bar background color matches the header or app's theme
+      />
       <View style={styles.container}>
         {/* Header */}
         {shouldShowHeader && (
@@ -72,6 +83,26 @@ export default function Layout() {
               </TouchableOpacity>
             </Link>
 
+            <Link href="/books" asChild>
+              <TouchableOpacity style={styles.iconContainer}>
+                <Image
+                  source={booksIcon}
+                  style={[
+                    styles.icon,
+                    pathname === "/books" && styles.activeIcon, // Highlight active icon
+                  ]}
+                />
+                <Text
+                  style={[
+                    styles.label,
+                    pathname === "/books" && styles.activeLabel, // Highlight active label
+                  ]}
+                >
+                  Books
+                </Text>
+              </TouchableOpacity>
+            </Link>
+
             <Link href="/search" asChild>
               <TouchableOpacity style={styles.iconContainer}>
                 <Image
@@ -88,6 +119,26 @@ export default function Layout() {
                   ]}
                 >
                   Search
+                </Text>
+              </TouchableOpacity>
+            </Link>
+
+            <Link href="/language" asChild>
+              <TouchableOpacity style={styles.iconContainer}>
+                <Image
+                  source={languagesIcon}
+                  style={[
+                    styles.icon,
+                    pathname === "/language" && styles.activeIcon, // Highlight active icon
+                  ]}
+                />
+                <Text
+                  style={[
+                    styles.label,
+                    pathname === "/language" && styles.activeLabel, // Highlight active label
+                  ]}
+                >
+                  Languages
                 </Text>
               </TouchableOpacity>
             </Link>

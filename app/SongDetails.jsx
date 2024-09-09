@@ -1,45 +1,100 @@
-// components/SongDetails.jsx
 import React from "react";
 import {
   View,
   Text,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   Linking,
 } from "react-native";
 import styles from "../assets/styles/styles.js"; // Ensure the path is correct
 
-const SongDetails = ({ selectedSong, selectedBook, songNumberKey }) => {
+const SongDetails = ({
+  selectedSong,
+  selectedBook,
+  songNumberKey,
+  songsData,
+  currentSongIndex,
+  onSongSelect,
+}) => {
   if (!selectedSong || !songNumberKey) {
     return null;
   }
 
+  // Function to render only the current song number and adjacent ones
+  const renderSongNumberScroll = () => {
+    const totalSongs = songsData.length;
+    const numbersToShow = [];
+
+    // Show current song, previous song, and next song (if available)
+    for (let i = -3; i <= 3; i++) {
+      const songIndex = currentSongIndex + i;
+      if (songIndex >= 0 && songIndex < totalSongs) {
+        numbersToShow.push(songsData[songIndex]);
+      }
+    }
+
+    return (
+      <View style={styles.songDetailsNumberScrollContainer}>
+        <FlatList
+          data={numbersToShow}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          keyExtractor={(item) => item[songNumberKey].toString()}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              style={[
+                styles.songDetailsNumberItem,
+                currentSongIndex === index &&
+                  styles.songDetailsCurrentNumberItem,
+              ]}
+              onPress={() => onSongSelect(songsData.indexOf(item))}
+            >
+              <Text
+                style={[
+                  styles.songDetailsNumberText,
+                  currentSongIndex === songsData.indexOf(item) &&
+                    styles.songDetailsCurrentNumberText,
+                ]}
+              >
+                {item[songNumberKey].toString()}
+              </Text>
+            </TouchableOpacity>
+          )}
+        />
+      </View>
+    );
+  };
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.detailsContainer}>
+    <View style={styles.roundedTopContainer}>
+      {/* Rounded container for song number scroll */}
+      <View style={styles.songDetailsRoundedTopContainer}>
+        {renderSongNumberScroll()}
+
         {/* Display the Book Name and Song Number */}
-        <Text style={styles.lyrics_bookTitle}>
+        <Text style={styles.songDetailsTitle}>
           {selectedBook}: {selectedSong[songNumberKey]}
         </Text>
-
-        {/* Display the Key if available */}
-        {selectedSong.Key && (
-          <Text style={styles.lyrics_key}>{selectedSong.Key}</Text>
-        )}
 
         {/* Display the Audio Link */}
         {selectedSong["Link / Audio"] && (
           <TouchableOpacity
             onPress={() => Linking.openURL(selectedSong["Link / Audio"])}
+            style={styles.songDetailsAudioLinkContainer}
           >
-            <Text style={styles.link}>Listen to Song</Text>
+            <Text style={styles.songDetailsAudioLinkText}>
+              🎵 Listen to Song
+            </Text>
           </TouchableOpacity>
         )}
-
-        {/* Display the Lyrics */}
-        <Text style={styles.lyrics}>{selectedSong.Lyrics}</Text>
       </View>
-    </ScrollView>
+
+      {/* Display the Lyrics */}
+      <ScrollView style={styles.songDetailsLyricsContainer}>
+        <Text style={styles.songDetailsLyricsText}>{selectedSong.Lyrics}</Text>
+      </ScrollView>
+    </View>
   );
 };
 
