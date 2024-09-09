@@ -191,31 +191,12 @@ const styles = StyleSheet.create({
         color: commonColors.textPrimary,
     },
 
-    // Coming Soon
-    comingSoonContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#182026",
-    },
-    comingSoonText: {
-        fontSize: 32,
-        fontFamily: commonFonts.semiBoldFont,
-        color: "#FFFFFF",
-        marginBottom: 10,
-    },
-    comingSoonSubText: {
-        fontSize: 18,
-        fontFamily: commonFonts.regularFont,
-        color: "#9A8C98",
-    },
-
     // Search Tab
     searchContainer: {
         flexDirection: "row",
         alignItems: "center",
-        margin: 20,
-        paddingHorizontal: 10,
+        margin: 10,
+        paddingBottom: 10,
     },
     searchInput: {
         flex: 1,
@@ -232,6 +213,7 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25,
         marginLeft: 10,
+        tintColor: commonColors.activeIconColor,
     },
     hymnItem: {
         flexDirection: "row",
@@ -404,5 +386,8 @@ const styles = StyleSheet.create({
         lineHeight: 24,
         color: "#333",
     },
+
+    //settings page
+
 });
 export default styles;
